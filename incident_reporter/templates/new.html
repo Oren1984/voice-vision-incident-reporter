@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}New report{% endblock %}
+{% block content %}
+<h1>New incident report</h1>
+<p class="muted">Upload a spoken report and a photo of the scene. Both are checked on the server (type, size, duration, damage). Image metadata such as GPS location is removed when the image is stored.</p>
+{% if error %}<p class="error" role="alert" id="server-error">{{ error }}</p>{% endif %}
+<form method="post" action="/incidents" enctype="multipart/form-data" class="card stack" id="upload-form"
+      data-audio-max="{{ limits.audio_max_bytes }}" data-image-max="{{ limits.image_max_bytes }}"
+      data-min-seconds="{{ limits.audio_min_seconds }}" data-max-seconds="{{ limits.audio_max_seconds }}">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <div class="grid2">
+    <div class="field">
+      <label for="audio">Spoken report (audio)</label>
+      <input id="audio" name="audio" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm,.flac" aria-describedby="audio-help audio-status">
+      <p id="audio-help" class="help">WAV, MP3, M4A, OGG, WebM or FLAC · up to {{ (limits.audio_max_bytes // 1048576) }} MB · {{ limits.audio_min_seconds|int }}–{{ limits.audio_max_seconds|int }} seconds</p>
+      <p id="audio-status" class="help" aria-live="polite"></p>
+      <audio id="audio-preview" controls hidden></audio>
+    </div>
+    <div class="field">
+      <label for="image">Scene image</label>
+      <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="image-help image-status">
+      <p id="image-help" class="help">JPEG, PNG or WebP · up to {{ (limits.image_max_bytes // 1048576) }} MB · at least {{ limits.image_min_side }} px</p>
+      <p id="image-status" class="help" aria-live="polite"></p>
+      <img id="image-preview" alt="Preview of the selected image" hidden>
+    </div>
+  </div>
+  <p class="help">You can submit with one input missing; the incident will then go straight to review with the gap flagged.</p>
+  <div class="actions">
+    <button class="btn" type="submit" id="submit-btn">Analyse report</button>
+    <span id="busy" class="help" aria-live="polite" hidden>Transcribing and analysing locally — this can take up to a minute on a laptop CPU…</span>
+  </div>
+</form>
+{% endblock %}

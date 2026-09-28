@@ -1,0 +1,8 @@
+# Experiment, speech evaluation and tests (in addition to requirements.txt)
+-r requirements.txt
+scikit-learn==1.9.1
+pandas==3.0.1
+kokoro-onnx==0.6.1
+soundfile==0.14.0
+pytest==9.1.1
+httpx==0.28.1

@@ -1,0 +1,9 @@
+{
+  "command": "python -m pytest",
+  "exit_code": 0,
+  "summary": "88 passed, 1 warning in 16.02s",
+  "passed": 88,
+  "failed": 0,
+  "seconds": 17.8,
+  "recorded": "2026-09-28T10:09:08Z"
+}

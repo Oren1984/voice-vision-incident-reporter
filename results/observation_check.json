@@ -1,0 +1,105 @@
+{
+  "note": "CrisisMMD dev split (n=998). AUROC of each concept score for images of the related humanitarian class vs all others. A weak proxy: class labels are not concept labels.",
+  "labels": [
+    "affected_individuals",
+    "infrastructure_and_utility_damage",
+    "not_humanitarian",
+    "other_relevant_information",
+    "rescue_volunteering_or_donation_effort"
+  ],
+  "thresholds": {
+    "likely": 0.6,
+    "possible": 0.35
+  },
+  "concepts": {
+    "fire_smoke": {
+      "likely_share": 0.018036072144288578,
+      "possible_share": 0.047094188376753505
+    },
+    "flood_water": {
+      "likely_share": 0.025050100200400802,
+      "possible_share": 0.018036072144288578,
+      "related_class": "infrastructure_and_utility_damage",
+      "n_related": 80,
+      "auroc": 0.8227805010893247,
+      "mean_score_related": 0.26155,
+      "mean_score_other": 0.056509803921568624
+    },
+    "structural_damage": {
+      "likely_share": 0.01503006012024048,
+      "possible_share": 0.050100200400801605,
+      "related_class": "infrastructure_and_utility_damage",
+      "n_related": 80,
+      "auroc": 0.7831290849673203,
+      "mean_score_related": 0.2506875,
+      "mean_score_other": 0.0885599128540305
+    },
+    "debris": {
+      "likely_share": 0.00501002004008016,
+      "possible_share": 0.01503006012024048,
+      "related_class": "infrastructure_and_utility_damage",
+      "n_related": 80,
+      "auroc": 0.7604847494553378,
+      "mean_score_related": 0.1485875,
+      "mean_score_other": 0.03661328976034859
+    },
+    "power_utility": {
+      "likely_share": 0.03807615230460922,
+      "possible_share": 0.07114228456913828,
+      "related_class": "infrastructure_and_utility_damage",
+      "n_related": 80,
+      "auroc": 0.7627995642701525,
+      "mean_score_related": 0.2536375,
+      "mean_score_other": 0.10652287581699345
+    },
+    "vehicle_damage": {
+      "likely_share": 0.003006012024048096,
+      "possible_share": 0.01503006012024048
+    },
+    "injured_people": {
+      "likely_share": 0.017034068136272545,
+      "possible_share": 0.036072144288577156,
+      "related_class": "affected_individuals",
+      "n_related": 9,
+      "auroc": 0.7600269632625547,
+      "mean_score_related": 0.25733333333333336,
+      "mean_score_other": 0.07647017189079877
+    },
+    "displaced_people": {
+      "likely_share": 0.10120240480961924,
+      "possible_share": 0.18937875751503006,
+      "related_class": "affected_individuals",
+      "n_related": 9,
+      "auroc": 0.6376811594202898,
+      "mean_score_related": 0.3355555555555555,
+      "mean_score_other": 0.2387876643073812
+    },
+    "responders": {
+      "likely_share": 0.04308617234468938,
+      "possible_share": 0.07014028056112225,
+      "related_class": "rescue_volunteering_or_donation_effort",
+      "n_related": 149,
+      "auroc": 0.7572904562019273,
+      "mean_score_related": 0.2893825503355705,
+      "mean_score_other": 0.11373733804475854
+    },
+    "relief_supplies": {
+      "likely_share": 0.07715430861723446,
+      "possible_share": 0.07515030060120241,
+      "related_class": "rescue_volunteering_or_donation_effort",
+      "n_related": 149,
+      "auroc": 0.803511434692216,
+      "mean_score_related": 0.41767114093959734,
+      "mean_score_other": 0.11498233215547704
+    },
+    "non_photo": {
+      "likely_share": 0.20541082164328658,
+      "possible_share": 0.08917835671342686,
+      "related_class": "other_relevant_information",
+      "n_related": 239,
+      "auroc": 0.9001686870524418,
+      "mean_score_related": 0.6844644351464435,
+      "mean_score_other": 0.1655691699604743
+    }
+  }
+}

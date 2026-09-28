@@ -1,0 +1,53 @@
+{
+  "protocol": "docs/experiment-design.md v1, SP3",
+  "note": "Synthetic speech (Kokoro-82M) of the 955 CrisisMMD test tweets; frozen RQ1 heads; aggregate results only (dataset confidentiality).",
+  "n": 955,
+  "audio_hours": 1.48,
+  "heads": "trained",
+  "wer_clean": 0.2280870401118588,
+  "wer_snr10": 0.28235602551778377,
+  "results": {
+    "original_text": {
+      "text_only_macro_f1": 0.7425538323175271,
+      "combined_macro_f1": 0.8159839371255012,
+      "text_only_accuracy": 0.8261780104712042,
+      "combined_accuracy": 0.875392670157068
+    },
+    "speakable_reference": {
+      "text_only_macro_f1": 0.7569294939001985,
+      "combined_macro_f1": 0.8106279578469466,
+      "text_only_accuracy": 0.8272251308900523,
+      "combined_accuracy": 0.8732984293193717,
+      "text_only_prediction_changes_vs_original": 45,
+      "combined_prediction_changes_vs_original": 18
+    },
+    "asr_clean": {
+      "text_only_macro_f1": 0.7382940566374094,
+      "combined_macro_f1": 0.8048439408181091,
+      "text_only_accuracy": 0.8198952879581152,
+      "combined_accuracy": 0.8649214659685864,
+      "text_only_prediction_changes_vs_original": 84,
+      "combined_prediction_changes_vs_original": 41
+    },
+    "asr_snr10": {
+      "text_only_macro_f1": 0.735250182187791,
+      "combined_macro_f1": 0.8163659126729007,
+      "text_only_accuracy": 0.8104712041884817,
+      "combined_accuracy": 0.8691099476439791,
+      "text_only_prediction_changes_vs_original": 105,
+      "combined_prediction_changes_vs_original": 48
+    }
+  },
+  "text_only_drop_original_to_asr_clean": 0.004259775680117706,
+  "combined_drop_original_to_asr_clean": 0.011139996307392153,
+  "asr": {
+    "model": "faster-whisper base.en",
+    "revision": "3d3d5dee26484f91867d81cb899cfcf72b96be6c"
+  },
+  "tts_voices": [
+    "af_heart",
+    "am_michael",
+    "bf_emma",
+    "bm_george"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "status": "post-hoc exploratory; not pre-registered",
+  "a_macro_f1_4_classes_without_affected_individuals": {
+    "text": 0.7948589570635756,
+    "image": 0.8591728242739396,
+    "combined": 0.8699799214068767,
+    "combined_minus_best_unimodal": 0.010807097132937149
+  },
+  "b_all_views_balanced_class_weights": {
+    "selected_C_on_dev": {
+      "text": 3,
+      "image": 10,
+      "combined": 100
+    },
+    "test_macro_f1": {
+      "text": 0.6803360747937229,
+      "image": 0.7517349448089662,
+      "combined": 0.8159839371255012
+    },
+    "combined_minus_best_unimodal": {
+      "point": 0.06424899231653503,
+      "ci95": [
+        0.0017729609588551251,
+        0.12463381834983886
+      ],
+      "share_resamples_above_0": 0.9767,
+      "resamples": 10000,
+      "seed": 2026
+    }
+  }
+}

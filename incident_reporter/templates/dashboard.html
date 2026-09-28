@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Incidents{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Incidents</h1>
+  <a class="btn" href="/incidents/new">New report</a>
+</div>
+{% if not incidents %}
+<section class="card"><p>No incidents yet. <a href="/incidents/new">Submit a spoken report and an image</a>.</p></section>
+{% else %}
+<div class="table-wrap">
+<table class="list">
+  <caption class="sr-only">Incidents, newest first</caption>
+  <thead><tr><th scope="col">Incident</th><th scope="col">Status</th><th scope="col">Proposed category</th><th scope="col">Open questions</th><th scope="col">Flags</th><th scope="col">Reporter</th><th scope="col">Created (UTC)</th></tr></thead>
+  <tbody>
+  {% for i in incidents %}
+  <tr>
+    <td><a href="/incidents/{{ i.id }}" class="mono">{{ i.id }}</a></td>
+    <td><span class="status status-{{ i.status }}">{{ i.status }}</span></td>
+    <td>{{ DISPLAY.get(i.category, "—") if i.category else "—" }}</td>
+    <td>{{ i.open_questions }}</td>
+    <td>{% for f in i.flags %}<span class="flag">{{ f }}</span> {% endfor %}</td>
+    <td>{{ i.creator }}</td>
+    <td class="mono small">{{ i.created_at[:19].replace("T", " ") }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

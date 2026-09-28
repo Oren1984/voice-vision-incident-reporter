@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Operations{% endblock %}
+{% block content %}
+<h1>Operations</h1>
+<p class="muted">In-process metrics since start (uptime {{ metrics.uptime_s }} s), stored counts, and audit-chain verification. JSON: <a href="/api/metrics">/api/metrics</a> · liveness: <a href="/healthz">/healthz</a></p>
+<div class="grid3">
+  <div class="card"><h2>Incidents</h2><ul class="kvlist">{% for k, v in stats.incidents_by_status.items() %}<li><span class="status status-{{ k }}">{{ k }}</span> <b>{{ v }}</b></li>{% else %}<li class="muted">none</li>{% endfor %}</ul>
+    <p class="small">Approved after a reviewer edit: <b>{{ stats.approved_after_reviewer_edit }}</b></p></div>
+  <div class="card"><h2>Review outcomes &amp; failures</h2><ul class="kvlist">{% for k, v in stats.audit_action_counts.items() %}<li>{{ k }} <b>{{ v }}</b></li>{% else %}<li class="muted">none</li>{% endfor %}</ul></div>
+  <div class="card {{ 'good' if audit_chain.ok else 'bad' }}"><h2>Audit chain</h2><p>{{ "Intact" if audit_chain.ok else "BROKEN at event " ~ audit_chain.broken_at_seq }} · {{ audit_chain.events }} events</p></div>
+</div>
+<div class="grid2">
+  <div class="card"><h2>Flags on incidents</h2><ul class="kvlist">{% for k, v in stats.flag_counts.items() %}<li><span class="flag">{{ k }}</span> <b>{{ v }}</b></li>{% else %}<li class="muted">none</li>{% endfor %}</ul></div>
+  <div class="card"><h2>Models</h2><ul class="kvlist"><li>ASR: {{ models.asr }}</li><li>Backbone: {{ models.clip }}</li><li>Heads: {{ models.heads }}</li><li>Loaded: {{ models.loaded }}</li></ul></div>
+</div>
+<div class="card"><h2>Durations</h2>
+  <div class="table-wrap"><table class="list small"><thead><tr><th scope="col">Operation</th><th scope="col">Count</th><th scope="col">p50 ms</th><th scope="col">p95 ms</th><th scope="col">max ms</th></tr></thead>
+  <tbody>{% for k, v in metrics.durations.items()|sort %}<tr><td class="mono">{{ k }}</td><td>{{ v.count }}</td><td>{{ v.p50_ms }}</td><td>{{ v.p95_ms }}</td><td>{{ v.max_ms }}</td></tr>{% endfor %}</tbody></table></div>
+</div>
+<div class="card"><h2>Counters</h2><ul class="kvlist cols">{% for k, v in metrics.counters.items()|sort %}<li class="mono small">{{ k }} <b>{{ v }}</b></li>{% endfor %}</ul></div>
+<div class="card"><h2>Recent audit events</h2>
+  <div class="table-wrap"><table class="list small"><thead><tr><th scope="col">#</th><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Incident</th></tr></thead>
+  <tbody>{% for e in recent %}<tr><td>{{ e.seq }}</td><td class="mono">{{ e.ts[:19].replace("T", " ") }}</td><td>{{ e.actor }}</td><td>{{ e.action }}</td><td>{% if e.incident_id %}<a class="mono" href="/incidents/{{ e.incident_id }}">{{ e.incident_id }}</a>{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+</div>
+{% endblock %}

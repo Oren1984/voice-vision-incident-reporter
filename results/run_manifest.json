@@ -1,0 +1,34 @@
+{
+  "rq1": {
+    "completed": "2026-09-27T18:54:03Z",
+    "seed": 13,
+    "bootstrap_seed": 2026
+  },
+  "clip": {
+    "model": "openai/clip-vit-base-patch32",
+    "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.5.3",
+      "scikit-learn": "1.9.1",
+      "torch": "2.14.0+cpu",
+      "transformers": "5.17.0",
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.8.2",
+      "pillow": "12.3.0",
+      "kokoro-onnx": "0.6.1",
+      "onnxruntime": "1.30.0",
+      "pandas": "3.0.1",
+      "scipy": "1.17.1"
+    }
+  },
+  "commands": [
+    "python -m experiments.prepare",
+    "python -m experiments.extract_features",
+    "python -m experiments.run_rq1 select",
+    "python -m experiments.run_rq1 test"
+  ]
+}

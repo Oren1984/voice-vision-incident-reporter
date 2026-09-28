@@ -1,0 +1,73 @@
+/* ============================================================
+   AI SYSTEMS PORTFOLIO — Layout
+   Grids and section-level structural layout
+   ============================================================ */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  align-items: stretch;
+}
+
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.mindset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+/* ── ai-systems/index.html page header ────────────────────── */
+.page-header {
+  padding: calc(var(--nav-height) + var(--space-2xl)) 0 var(--space-md);
+  text-align: center;
+}
+
+.page-header .section-title {
+  margin-bottom: var(--space-sm);
+}
+
+.page-header .section-header {
+  margin-bottom: 0;
+}
+
+.page-header + .section {
+  padding-top: var(--space-lg);
+}
+
+.project-group {
+  margin-bottom: var(--space-2xl);
+}
+
+.project-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.project-group-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-md);
+}

@@ -1,0 +1,370 @@
+{
+  "protocol": "docs/experiment-design.md v1",
+  "grid": {
+    "C": [
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1,
+      3,
+      10,
+      30,
+      100
+    ],
+    "class_weight": [
+      "None",
+      "balanced"
+    ]
+  },
+  "views": {
+    "text": {
+      "selected": {
+        "C": 30,
+        "class_weight": "None",
+        "dev_macro_f1": 0.7073209019964583
+      },
+      "all": [
+        {
+          "C": 0.01,
+          "class_weight": "None",
+          "dev_macro_f1": 0.21091618294080675
+        },
+        {
+          "C": 0.03,
+          "class_weight": "None",
+          "dev_macro_f1": 0.40752497690913836
+        },
+        {
+          "C": 0.1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.5800693083165881
+        },
+        {
+          "C": 0.3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6114760518269727
+        },
+        {
+          "C": 1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.636319318401734
+        },
+        {
+          "C": 3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6765610772214594
+        },
+        {
+          "C": 10,
+          "class_weight": "None",
+          "dev_macro_f1": 0.697623834522809
+        },
+        {
+          "C": 30,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7073209019964583
+        },
+        {
+          "C": 100,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6768259108191389
+        },
+        {
+          "C": 0.01,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.5950013732771169
+        },
+        {
+          "C": 0.03,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6141794799161956
+        },
+        {
+          "C": 0.1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6349942304218866
+        },
+        {
+          "C": 0.3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6627410830830549
+        },
+        {
+          "C": 1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6849626203480567
+        },
+        {
+          "C": 3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7072453163770861
+        },
+        {
+          "C": 10,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6831777196312018
+        },
+        {
+          "C": 30,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6820218827630867
+        },
+        {
+          "C": 100,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6655598130768087
+        }
+      ]
+    },
+    "image": {
+      "selected": {
+        "C": 3,
+        "class_weight": "None",
+        "dev_macro_f1": 0.731165799743895
+      },
+      "all": [
+        {
+          "C": 0.01,
+          "class_weight": "None",
+          "dev_macro_f1": 0.3160460096236541
+        },
+        {
+          "C": 0.03,
+          "class_weight": "None",
+          "dev_macro_f1": 0.5704409288288506
+        },
+        {
+          "C": 0.1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6438661501885911
+        },
+        {
+          "C": 0.3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.650924085942701
+        },
+        {
+          "C": 1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6594295234341523
+        },
+        {
+          "C": 3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.731165799743895
+        },
+        {
+          "C": 10,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7305387214059305
+        },
+        {
+          "C": 30,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7209557682797121
+        },
+        {
+          "C": 100,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7097475769965402
+        },
+        {
+          "C": 0.01,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6594284930805633
+        },
+        {
+          "C": 0.03,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.6792318550059269
+        },
+        {
+          "C": 0.1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7025348435953862
+        },
+        {
+          "C": 0.3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.721305158698905
+        },
+        {
+          "C": 1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7248076023492541
+        },
+        {
+          "C": 3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7248071958050177
+        },
+        {
+          "C": 10,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7250838965201128
+        },
+        {
+          "C": 30,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7055573034171592
+        },
+        {
+          "C": 100,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7068477878130468
+        }
+      ]
+    },
+    "combined": {
+      "selected": {
+        "C": 100,
+        "class_weight": "balanced",
+        "dev_macro_f1": 0.8491077752224893
+      },
+      "all": [
+        {
+          "C": 0.01,
+          "class_weight": "None",
+          "dev_macro_f1": 0.42798263174733764
+        },
+        {
+          "C": 0.03,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6457483194454271
+        },
+        {
+          "C": 0.1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6768957616863658
+        },
+        {
+          "C": 0.3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.6857283173984245
+        },
+        {
+          "C": 1,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7689978343306718
+        },
+        {
+          "C": 3,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7769982640292749
+        },
+        {
+          "C": 10,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7907573722745151
+        },
+        {
+          "C": 30,
+          "class_weight": "None",
+          "dev_macro_f1": 0.790341060287588
+        },
+        {
+          "C": 100,
+          "class_weight": "None",
+          "dev_macro_f1": 0.7777015544347151
+        },
+        {
+          "C": 0.01,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7058056429520465
+        },
+        {
+          "C": 0.03,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7224614205454435
+        },
+        {
+          "C": 0.1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7387827309773688
+        },
+        {
+          "C": 0.3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.7732549496861582
+        },
+        {
+          "C": 1,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.8093178380739591
+        },
+        {
+          "C": 3,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.8230161511913272
+        },
+        {
+          "C": 10,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.8234796032895048
+        },
+        {
+          "C": 30,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.8386876091446085
+        },
+        {
+          "C": 100,
+          "class_weight": "balanced",
+          "dev_macro_f1": 0.8491077752224893
+        }
+      ]
+    }
+  },
+  "late_fusion": {
+    "selected_w_text": 0.3,
+    "dev_macro_f1": 0.7524336070451968,
+    "all": [
+      {
+        "w_text": 0.0,
+        "dev_macro_f1": 0.731165799743895
+      },
+      {
+        "w_text": 0.1,
+        "dev_macro_f1": 0.7392094156294805
+      },
+      {
+        "w_text": 0.2,
+        "dev_macro_f1": 0.749326868474516
+      },
+      {
+        "w_text": 0.3,
+        "dev_macro_f1": 0.7524336070451968
+      },
+      {
+        "w_text": 0.4,
+        "dev_macro_f1": 0.7187664744897624
+      },
+      {
+        "w_text": 0.5,
+        "dev_macro_f1": 0.717169416515691
+      },
+      {
+        "w_text": 0.6,
+        "dev_macro_f1": 0.7042010497454776
+      },
+      {
+        "w_text": 0.7,
+        "dev_macro_f1": 0.7418424678372695
+      },
+      {
+        "w_text": 0.8,
+        "dev_macro_f1": 0.7275519679290275
+      },
+      {
+        "w_text": 0.9,
+        "dev_macro_f1": 0.7158799121453273
+      },
+      {
+        "w_text": 1.0,
+        "dev_macro_f1": 0.7073209019964583
+      }
+    ]
+  },
+  "created": "2026-09-27T18:50:07Z"
+}

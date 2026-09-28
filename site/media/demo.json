@@ -1,0 +1,18 @@
+{
+  "file": "site/media/demo.mp4",
+  "duration_s": 163.2,
+  "sha256": "97364e2d1dc565d58634f608b93aa58014d0b01f574d1054b822f725a049b2bf",
+  "captions": 40,
+  "source": "screen recording of the local application (Playwright, Chromium) \u2014 not a mock-up",
+  "narration": "synthetic, Kokoro-82M (Apache-2.0), voice af_heart",
+  "music": {
+    "track": "Dreamer",
+    "creator": "Kevin MacLeod",
+    "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dreamer.mp3",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "sha256_of_source": "615e65c9ca131c11f8e12970644ed74ef822ec4f643b1d9d0085a223600bcdfb",
+    "changes": "excerpt from the start, trimmed to video length, volume 0.22, side-chain ducked under narration, 3 s fade-in, 4 s fade-out, AAC"
+  },
+  "inputs": "demo scenarios s1 (flood report + FEMA flood photo) and s2 (fire report + same photo) \u2014 illustrative, see demo/CREDITS.md"
+}

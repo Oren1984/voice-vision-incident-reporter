@@ -1,0 +1,17 @@
+# Application runtime (local, CPU). Tested on Windows 11, Python 3.12.10.
+# torch CPU wheel: pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/cpu
+torch==2.14.0
+transformers==5.17.0
+faster-whisper==1.2.1
+av==18.1.0
+fastapi==0.141.1
+starlette==1.7.0
+uvicorn==0.54.0
+jinja2==3.1.6
+python-multipart==0.0.32
+pillow==12.3.0
+numpy==2.5.3
+# transformers imports scipy when loading CLIP
+scipy==1.17.1
+# Optional: verify TLS against the OS certificate store (VVIR_USE_OS_TRUSTSTORE=1)
+truststore==0.10.4

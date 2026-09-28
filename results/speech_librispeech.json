@@ -1,0 +1,677 @@
+{
+  "protocol": "docs/experiment-design.md v1, SP1",
+  "data": "LibriSpeech test-clean (Panayotov et al., 2015), CC BY 4.0, https://www.openslr.org/12",
+  "sample": {
+    "n": 100,
+    "seed": 13,
+    "pool": 2620,
+    "speakers": 37,
+    "hours": 0.21
+  },
+  "asr": {
+    "model": "faster-whisper base.en",
+    "revision": "3d3d5dee26484f91867d81cb899cfcf72b96be6c"
+  },
+  "wer": 0.043369890329012964,
+  "cer": 0.013820245286472634,
+  "utterances_with_zero_errors": 54,
+  "worst_examples": [
+    {
+      "utterance": "237-134500-0001",
+      "speaker": "237",
+      "seconds": 1.81,
+      "word_edits": 2,
+      "ref_words": 2,
+      "char_edits": 5,
+      "ref_chars": 12,
+      "reference": "MARIE SIGHED",
+      "hypothesis": "Marie's side."
+    },
+    {
+      "utterance": "5142-36377-0011",
+      "speaker": "5142",
+      "seconds": 2.17,
+      "word_edits": 2,
+      "ref_words": 6,
+      "char_edits": 5,
+      "ref_chars": 33,
+      "reference": "MISTER JAGO IS AN AMERICAN PHILIP",
+      "hypothesis": "Mr. Yago is an American, Philip."
+    },
+    {
+      "utterance": "260-123286-0014",
+      "speaker": "260",
+      "seconds": 2.98,
+      "word_edits": 2,
+      "ref_words": 7,
+      "char_edits": 5,
+      "ref_chars": 35,
+      "reference": "TRULY THIS SEA IS OF INFINITE WIDTH",
+      "hypothesis": "Truly, the C is of infinite width."
+    },
+    {
+      "utterance": "3729-6852-0016",
+      "speaker": "3729",
+      "seconds": 4.2,
+      "word_edits": 2,
+      "ref_words": 7,
+      "char_edits": 3,
+      "ref_chars": 48,
+      "reference": "MADAME QUINSON BESIDES CAN ANSWER YOUR ENQUIRIES",
+      "hypothesis": "Madame Quinceon, besides, can answer your inquiries."
+    },
+    {
+      "utterance": "8555-284449-0014",
+      "speaker": "8555",
+      "seconds": 2.15,
+      "word_edits": 1,
+      "ref_words": 4,
+      "char_edits": 6,
+      "ref_chars": 28,
+      "reference": "THE FORMER BOOLOOROO GROANED",
+      "hypothesis": "The former boulevard groaned."
+    }
+  ],
+  "per_utterance": [
+    {
+      "utterance": "1089-134686-0006",
+      "seconds": 10.55,
+      "word_edits": 2,
+      "ref_words": 24
+    },
+    {
+      "utterance": "1089-134686-0037",
+      "seconds": 5.21,
+      "word_edits": 0,
+      "ref_words": 13
+    },
+    {
+      "utterance": "1188-133604-0013",
+      "seconds": 3.02,
+      "word_edits": 0,
+      "ref_words": 8
+    },
+    {
+      "utterance": "121-123859-0004",
+      "seconds": 9.51,
+      "word_edits": 1,
+      "ref_words": 17
+    },
+    {
+      "utterance": "1221-135766-0001",
+      "seconds": 16.71,
+      "word_edits": 2,
+      "ref_words": 48
+    },
+    {
+      "utterance": "1221-135766-0004",
+      "seconds": 7.44,
+      "word_edits": 0,
+      "ref_words": 18
+    },
+    {
+      "utterance": "1221-135767-0005",
+      "seconds": 5.87,
+      "word_edits": 0,
+      "ref_words": 14
+    },
+    {
+      "utterance": "1221-135767-0008",
+      "seconds": 3.1,
+      "word_edits": 1,
+      "ref_words": 9
+    },
+    {
+      "utterance": "1221-135767-0022",
+      "seconds": 14.39,
+      "word_edits": 0,
+      "ref_words": 38
+    },
+    {
+      "utterance": "1284-1180-0008",
+      "seconds": 10.49,
+      "word_edits": 1,
+      "ref_words": 37
+    },
+    {
+      "utterance": "1320-122612-0004",
+      "seconds": 6.42,
+      "word_edits": 1,
+      "ref_words": 15
+    },
+    {
+      "utterance": "1320-122617-0007",
+      "seconds": 18.52,
+      "word_edits": 0,
+      "ref_words": 60
+    },
+    {
+      "utterance": "1320-122617-0010",
+      "seconds": 10.0,
+      "word_edits": 1,
+      "ref_words": 23
+    },
+    {
+      "utterance": "1320-122617-0033",
+      "seconds": 11.04,
+      "word_edits": 4,
+      "ref_words": 35
+    },
+    {
+      "utterance": "1580-141083-0002",
+      "seconds": 6.13,
+      "word_edits": 0,
+      "ref_words": 18
+    },
+    {
+      "utterance": "1580-141084-0019",
+      "seconds": 3.12,
+      "word_edits": 0,
+      "ref_words": 9
+    },
+    {
+      "utterance": "1580-141084-0040",
+      "seconds": 5.99,
+      "word_edits": 0,
+      "ref_words": 17
+    },
+    {
+      "utterance": "2300-131720-0004",
+      "seconds": 19.91,
+      "word_edits": 0,
+      "ref_words": 44
+    },
+    {
+      "utterance": "237-126133-0018",
+      "seconds": 4.09,
+      "word_edits": 2,
+      "ref_words": 9
+    },
+    {
+      "utterance": "237-126133-0022",
+      "seconds": 5.04,
+      "word_edits": 0,
+      "ref_words": 15
+    },
+    {
+      "utterance": "237-134500-0001",
+      "seconds": 1.81,
+      "word_edits": 2,
+      "ref_words": 2
+    },
+    {
+      "utterance": "237-134500-0023",
+      "seconds": 3.06,
+      "word_edits": 0,
+      "ref_words": 12
+    },
+    {
+      "utterance": "260-123286-0014",
+      "seconds": 2.98,
+      "word_edits": 2,
+      "ref_words": 7
+    },
+    {
+      "utterance": "260-123286-0024",
+      "seconds": 3.04,
+      "word_edits": 0,
+      "ref_words": 8
+    },
+    {
+      "utterance": "260-123286-0025",
+      "seconds": 9.21,
+      "word_edits": 1,
+      "ref_words": 25
+    },
+    {
+      "utterance": "2830-3980-0010",
+      "seconds": 6.53,
+      "word_edits": 0,
+      "ref_words": 21
+    },
+    {
+      "utterance": "2830-3980-0023",
+      "seconds": 6.16,
+      "word_edits": 1,
+      "ref_words": 19
+    },
+    {
+      "utterance": "2830-3980-0035",
+      "seconds": 3.33,
+      "word_edits": 0,
+      "ref_words": 7
+    },
+    {
+      "utterance": "2961-960-0004",
+      "seconds": 8.22,
+      "word_edits": 3,
+      "ref_words": 19
+    },
+    {
+      "utterance": "3570-5694-0000",
+      "seconds": 12.09,
+      "word_edits": 2,
+      "ref_words": 37
+    },
+    {
+      "utterance": "3575-170457-0006",
+      "seconds": 8.3,
+      "word_edits": 2,
+      "ref_words": 24
+    },
+    {
+      "utterance": "3575-170457-0023",
+      "seconds": 9.1,
+      "word_edits": 0,
+      "ref_words": 23
+    },
+    {
+      "utterance": "3575-170457-0045",
+      "seconds": 6.52,
+      "word_edits": 3,
+      "ref_words": 19
+    },
+    {
+      "utterance": "3729-6852-0016",
+      "seconds": 4.2,
+      "word_edits": 2,
+      "ref_words": 7
+    },
+    {
+      "utterance": "4446-2271-0003",
+      "seconds": 3.7,
+      "word_edits": 0,
+      "ref_words": 14
+    },
+    {
+      "utterance": "4446-2275-0011",
+      "seconds": 2.44,
+      "word_edits": 1,
+      "ref_words": 6
+    },
+    {
+      "utterance": "4446-2275-0043",
+      "seconds": 5.88,
+      "word_edits": 0,
+      "ref_words": 17
+    },
+    {
+      "utterance": "4507-16021-0016",
+      "seconds": 17.27,
+      "word_edits": 0,
+      "ref_words": 34
+    },
+    {
+      "utterance": "4507-16021-0025",
+      "seconds": 9.21,
+      "word_edits": 0,
+      "ref_words": 17
+    },
+    {
+      "utterance": "4507-16021-0053",
+      "seconds": 8.1,
+      "word_edits": 0,
+      "ref_words": 18
+    },
+    {
+      "utterance": "4970-29095-0017",
+      "seconds": 3.93,
+      "word_edits": 0,
+      "ref_words": 10
+    },
+    {
+      "utterance": "4992-23283-0018",
+      "seconds": 6.58,
+      "word_edits": 0,
+      "ref_words": 20
+    },
+    {
+      "utterance": "4992-41797-0017",
+      "seconds": 8.69,
+      "word_edits": 0,
+      "ref_words": 22
+    },
+    {
+      "utterance": "5105-28240-0001",
+      "seconds": 16.07,
+      "word_edits": 2,
+      "ref_words": 47
+    },
+    {
+      "utterance": "5105-28240-0002",
+      "seconds": 4.01,
+      "word_edits": 1,
+      "ref_words": 9
+    },
+    {
+      "utterance": "5105-28240-0004",
+      "seconds": 6.01,
+      "word_edits": 0,
+      "ref_words": 18
+    },
+    {
+      "utterance": "5105-28240-0013",
+      "seconds": 2.96,
+      "word_edits": 0,
+      "ref_words": 6
+    },
+    {
+      "utterance": "5105-28241-0002",
+      "seconds": 10.96,
+      "word_edits": 0,
+      "ref_words": 27
+    },
+    {
+      "utterance": "5142-33396-0067",
+      "seconds": 5.57,
+      "word_edits": 2,
+      "ref_words": 23
+    },
+    {
+      "utterance": "5142-36377-0011",
+      "seconds": 2.17,
+      "word_edits": 2,
+      "ref_words": 6
+    },
+    {
+      "utterance": "5142-36377-0024",
+      "seconds": 5.78,
+      "word_edits": 0,
+      "ref_words": 18
+    },
+    {
+      "utterance": "5639-40744-0015",
+      "seconds": 11.02,
+      "word_edits": 3,
+      "ref_words": 37
+    },
+    {
+      "utterance": "5639-40744-0035",
+      "seconds": 17.52,
+      "word_edits": 5,
+      "ref_words": 52
+    },
+    {
+      "utterance": "5683-32866-0028",
+      "seconds": 5.62,
+      "word_edits": 1,
+      "ref_words": 11
+    },
+    {
+      "utterance": "5683-32879-0019",
+      "seconds": 6.35,
+      "word_edits": 1,
+      "ref_words": 22
+    },
+    {
+      "utterance": "61-70968-0035",
+      "seconds": 7.95,
+      "word_edits": 1,
+      "ref_words": 25
+    },
+    {
+      "utterance": "61-70968-0047",
+      "seconds": 4.78,
+      "word_edits": 1,
+      "ref_words": 15
+    },
+    {
+      "utterance": "61-70970-0010",
+      "seconds": 3.04,
+      "word_edits": 2,
+      "ref_words": 11
+    },
+    {
+      "utterance": "61-70970-0030",
+      "seconds": 3.24,
+      "word_edits": 0,
+      "ref_words": 8
+    },
+    {
+      "utterance": "61-70970-0034",
+      "seconds": 4.49,
+      "word_edits": 1,
+      "ref_words": 9
+    },
+    {
+      "utterance": "672-122797-0003",
+      "seconds": 4.76,
+      "word_edits": 0,
+      "ref_words": 11
+    },
+    {
+      "utterance": "6829-68769-0007",
+      "seconds": 3.87,
+      "word_edits": 0,
+      "ref_words": 13
+    },
+    {
+      "utterance": "6829-68769-0034",
+      "seconds": 6.05,
+      "word_edits": 1,
+      "ref_words": 20
+    },
+    {
+      "utterance": "6829-68769-0049",
+      "seconds": 7.4,
+      "word_edits": 0,
+      "ref_words": 19
+    },
+    {
+      "utterance": "6829-68771-0003",
+      "seconds": 4.01,
+      "word_edits": 0,
+      "ref_words": 10
+    },
+    {
+      "utterance": "6829-68771-0032",
+      "seconds": 6.55,
+      "word_edits": 0,
+      "ref_words": 17
+    },
+    {
+      "utterance": "6930-75918-0001",
+      "seconds": 14.22,
+      "word_edits": 0,
+      "ref_words": 43
+    },
+    {
+      "utterance": "6930-76324-0019",
+      "seconds": 2.58,
+      "word_edits": 1,
+      "ref_words": 7
+    },
+    {
+      "utterance": "6930-76324-0027",
+      "seconds": 8.27,
+      "word_edits": 3,
+      "ref_words": 23
+    },
+    {
+      "utterance": "6930-81414-0021",
+      "seconds": 3.23,
+      "word_edits": 0,
+      "ref_words": 7
+    },
+    {
+      "utterance": "7021-79740-0009",
+      "seconds": 3.63,
+      "word_edits": 0,
+      "ref_words": 10
+    },
+    {
+      "utterance": "7021-85628-0008",
+      "seconds": 7.12,
+      "word_edits": 1,
+      "ref_words": 17
+    },
+    {
+      "utterance": "7021-85628-0009",
+      "seconds": 8.54,
+      "word_edits": 0,
+      "ref_words": 21
+    },
+    {
+      "utterance": "7021-85628-0022",
+      "seconds": 5.14,
+      "word_edits": 0,
+      "ref_words": 14
+    },
+    {
+      "utterance": "7021-85628-0025",
+      "seconds": 2.77,
+      "word_edits": 0,
+      "ref_words": 6
+    },
+    {
+      "utterance": "7127-75946-0019",
+      "seconds": 2.63,
+      "word_edits": 0,
+      "ref_words": 4
+    },
+    {
+      "utterance": "7127-75947-0004",
+      "seconds": 1.91,
+      "word_edits": 0,
+      "ref_words": 2
+    },
+    {
+      "utterance": "7127-75947-0040",
+      "seconds": 13.79,
+      "word_edits": 7,
+      "ref_words": 40
+    },
+    {
+      "utterance": "7176-88083-0020",
+      "seconds": 5.42,
+      "word_edits": 0,
+      "ref_words": 16
+    },
+    {
+      "utterance": "7176-88083-0022",
+      "seconds": 9.48,
+      "word_edits": 2,
+      "ref_words": 28
+    },
+    {
+      "utterance": "7729-102255-0017",
+      "seconds": 15.11,
+      "word_edits": 0,
+      "ref_words": 35
+    },
+    {
+      "utterance": "7729-102255-0025",
+      "seconds": 5.49,
+      "word_edits": 1,
+      "ref_words": 10
+    },
+    {
+      "utterance": "8224-274381-0012",
+      "seconds": 19.89,
+      "word_edits": 0,
+      "ref_words": 48
+    },
+    {
+      "utterance": "8224-274384-0012",
+      "seconds": 18.73,
+      "word_edits": 1,
+      "ref_words": 36
+    },
+    {
+      "utterance": "8230-279154-0013",
+      "seconds": 14.56,
+      "word_edits": 0,
+      "ref_words": 39
+    },
+    {
+      "utterance": "8230-279154-0014",
+      "seconds": 7.94,
+      "word_edits": 0,
+      "ref_words": 22
+    },
+    {
+      "utterance": "8230-279154-0031",
+      "seconds": 12.66,
+      "word_edits": 0,
+      "ref_words": 33
+    },
+    {
+      "utterance": "8455-210777-0024",
+      "seconds": 7.56,
+      "word_edits": 1,
+      "ref_words": 19
+    },
+    {
+      "utterance": "8455-210777-0040",
+      "seconds": 6.2,
+      "word_edits": 1,
+      "ref_words": 17
+    },
+    {
+      "utterance": "8463-287645-0005",
+      "seconds": 15.97,
+      "word_edits": 0,
+      "ref_words": 51
+    },
+    {
+      "utterance": "8463-294825-0004",
+      "seconds": 3.68,
+      "word_edits": 0,
+      "ref_words": 8
+    },
+    {
+      "utterance": "8463-294825-0011",
+      "seconds": 2.18,
+      "word_edits": 0,
+      "ref_words": 3
+    },
+    {
+      "utterance": "8463-294828-0030",
+      "seconds": 2.69,
+      "word_edits": 0,
+      "ref_words": 5
+    },
+    {
+      "utterance": "8463-294828-0031",
+      "seconds": 7.76,
+      "word_edits": 2,
+      "ref_words": 26
+    },
+    {
+      "utterance": "8555-284447-0000",
+      "seconds": 9.61,
+      "word_edits": 3,
+      "ref_words": 27
+    },
+    {
+      "utterance": "8555-284447-0011",
+      "seconds": 1.96,
+      "word_edits": 0,
+      "ref_words": 4
+    },
+    {
+      "utterance": "8555-284449-0007",
+      "seconds": 9.31,
+      "word_edits": 5,
+      "ref_words": 25
+    },
+    {
+      "utterance": "8555-284449-0014",
+      "seconds": 2.15,
+      "word_edits": 1,
+      "ref_words": 4
+    },
+    {
+      "utterance": "8555-292519-0006",
+      "seconds": 10.18,
+      "word_edits": 1,
+      "ref_words": 23
+    },
+    {
+      "utterance": "908-31957-0004",
+      "seconds": 14.76,
+      "word_edits": 0,
+      "ref_words": 40
+    }
+  ]
+}

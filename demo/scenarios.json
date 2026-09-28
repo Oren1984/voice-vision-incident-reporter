@@ -1,0 +1,51 @@
+{
+  "notice": "ILLUSTRATIVE DEMO INPUTS. The spoken reports are fictional texts written for this project and voiced by a synthetic TTS model (Kokoro-82M). The photos are public-domain US government photos of unrelated real events (see demo/CREDITS.md). Each pairing was made up to exercise the workflow; none of these pairs is real incident data.",
+  "scenarios": [
+    {
+      "id": "s1_flood_consistent",
+      "title": "Flooded street: report and photo agree",
+      "voice": "af_heart",
+      "text": "The river flooded our street about twenty minutes ago and the water is still rising. Three cars are stuck, and an older couple is stranded in the house at 14 Mill Street.",
+      "audio": "audio/s1_flood_report.wav",
+      "image": "images/flood_street_fema_34508.jpg",
+      "expect": "Agreement on flood water; complementary location and people count from the report; category proposal for review."
+    },
+    {
+      "id": "s2_conflict",
+      "title": "Conflict: report describes a fire, photo shows flooding",
+      "voice": "am_michael",
+      "text": "There is a big fire in the warehouse on Harbor Road and thick smoke is spreading. I think two workers are still inside.",
+      "audio": "audio/s2_fire_report.wav",
+      "image": "images/flood_street_fema_34508.jpg",
+      "expect": "Hazard contradiction (fire vs flood water) listed with both sides; NEEDS_REVIEW; the system does not pick a side."
+    },
+    {
+      "id": "s3_collapse",
+      "title": "Collapsed building, mixed signals about injuries",
+      "voice": "bf_emma",
+      "text": "After the tremor, the front of the apartment building on Canal Street collapsed at around seven pm. Nobody seems to be hurt, but two people are trapped upstairs.",
+      "audio": "audio/s3_collapse_report.wav",
+      "image": "images/collapsed_building_fema_northridge.jpg",
+      "expect": "Agreement on structural damage; negated 'hurt' and asserted 'trapped' both shown for the reviewer."
+    },
+    {
+      "id": "s4_unclear",
+      "title": "Unclear speech and an unclear image",
+      "voice": "af_heart",
+      "text": "The river flooded our street about twenty minutes ago and the water is still rising. Three cars are stuck, and an older couple is stranded in the house at 14 Mill Street.",
+      "audio": "audio/s4_flood_report_noisy.wav",
+      "noise_snr_db": 0,
+      "image": "images/flood_street_fema_34508_blurred_dark.jpg",
+      "expect": "Transcription errors and image-quality flags; fail-safe NEEDS_REVIEW."
+    },
+    {
+      "id": "s5_fire_consistent",
+      "title": "Brush fire: report and photo agree",
+      "voice": "bm_george",
+      "text": "A brush fire is burning on the ridge above Cedar Lane. Firefighters are working on it with hoses, and the smoke is spreading toward the houses.",
+      "audio": "audio/s5_brush_fire_report.wav",
+      "image": "images/brush_fire_nps_horne_2021.jpg",
+      "expect": "Agreement on fire/smoke and responders."
+    }
+  ]
+}

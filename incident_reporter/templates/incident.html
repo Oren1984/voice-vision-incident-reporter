@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% block title %}{{ inc.id }}{% endblock %}
+{% macro src_chip(s) -%}
+  {%- if s.kind == "transcript" -%}<span class="chip chip-t" title="Transcript characters {{ s.start }}–{{ s.end }}{% if s.version %} ({{ s.version }} transcript){% endif %}">🎙 “{{ s.quote }}”</span>
+  {%- elif s.kind == "image" -%}<span class="chip chip-i" title="CLIP observation score against ordinary scenes">🖼 {{ BY_ID[s.concept].label if s.concept in BY_ID else s.concept }} · {{ s.score|pct }} · {{ s.band.replace("_", " ") }}</span>
+  {%- elif s.kind == "model" -%}<span class="chip chip-m" title="Classifier view output">⚙ {{ s.view }} view: {{ DISPLAY[s.label] }} · {{ s.confidence|pct }}</span>
+  {%- elif s.kind == "asr" -%}<span class="chip chip-a" title="Speech recogniser statistics">🔊 ASR log-prob {{ s.mean_logprob }} · no-speech {{ s.max_no_speech }}</span>
+  {%- endif -%}
+{%- endmacro %}
+{% block content %}
+{% set open = inc.status in ("DRAFT", "NEEDS_REVIEW") %}
+<div class="page-head">
+  <div>
+    <p class="eyebrow">Incident</p>
+    <h1 class="mono">{{ inc.id }}</h1>
+    <p class="muted small">Reported by {{ inc.creator }} · created {{ inc.created_at[:19].replace("T", " ") }} UTC · version {{ inc.version }}</p>
+  </div>
+  <div class="status-box">
+    <span class="status status-{{ inc.status }} status-lg">{{ inc.status }}</span>
+  </div>
+</div>
+
+<ol class="stepper" aria-label="Workflow">
+  <li class="{{ 'done' if inc.status != 'DRAFT' else 'now' }}">Draft<span>machine analysis, transcript check</span></li>
+  <li class="{{ 'now' if inc.status == 'NEEDS_REVIEW' else ('done' if inc.status in ('APPROVED','REJECTED') else '') }}">Needs review<span>human reviewer</span></li>
+  <li class="{{ 'now' if inc.status in ('APPROVED','REJECTED') else '' }}">{{ inc.status if inc.status in ('APPROVED','REJECTED') else 'Approved / Rejected' }}<span>explicit human decision</span></li>
+</ol>
+
+{% if inc.flags %}
+<section class="card warn" aria-labelledby="flags-h">
+  <h2 id="flags-h">Why this needs attention</h2>
+  <ul class="flags">{% for f in inc.flags %}<li><span class="flag">{{ f }}</span></li>{% endfor %}</ul>
+  <p class="help">Flags send an incident to review instead of letting it pass quietly. They never approve anything.</p>
+</section>
+{% endif %}
+
+{% if inc.status == "REJECTED" %}
+<section class="card bad"><h2>Rejected by {{ inc.decider }}</h2><p>{{ inc.decision_note }}</p><p class="small muted">{{ inc.decided_at }}</p></section>
+{% endif %}
+{% if record %}
+<section class="card good" aria-labelledby="rec-h">
+  <h2 id="rec-h">Approved record</h2>
+  <p>Approved by <strong>{{ record.record.approved_by }}</strong> at {{ record.record.approved_at }} · category <strong>{{ DISPLAY[record.record.category] }}</strong></p>
+  <p class="small mono">sha256 {{ record.sha256 }} · integrity {{ "verified" if record.integrity_ok else "FAILED" }}</p>
+  {% if record.record.open_questions_acknowledged %}<p class="small">Approved with {{ record.record.open_questions_acknowledged|length }} open question(s) explicitly acknowledged.</p>{% endif %}
+  <p><a href="/incidents/{{ inc.id }}/record.json">Download record (JSON)</a></p>
+</section>
+{% endif %}
+
+<section aria-labelledby="inputs-h">
+  <h2 id="inputs-h">1 · Inputs</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Spoken report</h3>
+      {% if inc.audio_file %}
+        <audio controls preload="metadata" src="/incidents/{{ inc.id }}/media/audio" aria-label="Spoken report recording"></audio>
+        <p class="small muted">{{ inc.audio_meta.format }} · {{ inc.audio_meta.seconds }} s · level {{ inc.audio_meta.rms_dbfs }} dBFS · silent {{ inc.audio_meta.silent_share|pct }}</p>
+      {% else %}<p class="muted">No audio was provided.</p>{% endif %}
+    </div>
+    <div class="card">
+      <h3>Scene image</h3>
+      {% if inc.image_file %}
+        <img class="scene" src="/incidents/{{ inc.id }}/media/image" alt="Uploaded scene image for incident {{ inc.id }}">
+        <p class="small muted">{{ inc.image_meta.width }}×{{ inc.image_meta.height }} · {{ inc.image_meta.format }}{% if inc.image_meta.metadata_removed %} · metadata removed on upload{% endif %}</p>
+      {% else %}<p class="muted">No image was provided.</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="transcript-h" id="transcript">
+  <h2 id="transcript-h">2 · Transcript</h2>
+  <div class="card">
+    {% if inc.audio_file %}
+      {% if inc.asr_meta %}
+      <p class="small muted">{{ inc.asr_meta.model }} · {{ inc.asr_meta.seconds }} s processing · mean log-prob {{ inc.asr_meta.mean_logprob }} · max no-speech {{ inc.asr_meta.max_no_speech }}
+        {% if inc.asr_meta.low_confidence %}<span class="flag">recogniser unsure</span>{% endif %}</p>
+      {% endif %}
+      <h3>{{ "Corrected transcript (used for analysis)" if inc.transcript_corrected else "Transcript (used for analysis)" }}</h3>
+      {% if current_text %}
+      <p class="transcript">{% for p in pieces %}{% if p.concept %}<mark class="m-{{ 'neg' if p.negated else 'pos' }}" title="{{ p.label }}{{ ' (negated)' if p.negated }}">{{ p.text }}</mark>{% else %}{{ p.text }}{% endif %}{% endfor %}</p>
+      <p class="help">Highlighted: terms the rule-based extractor linked to incident concepts. <mark class="m-pos">found</mark> <mark class="m-neg">negated</mark></p>
+      {% else %}<p class="error">No speech was recognised.</p>{% endif %}
+      {% if inc.transcript_corrected %}
+      <details><summary>Original machine transcript (kept for audit and evaluation)</summary><p class="transcript orig">{{ inc.transcript_original or "(empty)" }}</p></details>
+      {% endif %}
+      {% if open %}
+      <form method="post" action="/incidents/{{ inc.id }}/transcript" class="stack">
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="version" value="{{ inc.version }}">
+        <label for="transcript-edit">Correct the transcript — listen to the recording and fix recognition errors. The original stays on record.</label>
+        <textarea id="transcript-edit" name="transcript" rows="4" maxlength="5000">{{ current_text }}</textarea>
+        <button class="btn btn-ghost" type="submit">Save correction and re-analyse</button>
+      </form>
+      {% endif %}
+    {% else %}<p class="muted">No audio — no transcript.</p>{% endif %}
+  </div>
+</section>
+
+{% if a %}
+<section aria-labelledby="views-h">
+  <h2 id="views-h">3 · Three inference views</h2>
+  <p class="help">Same classifier family, three inputs. Heads: <strong>{{ a.heads }}</strong>{% if a.heads == "zero_shot" %} (no CrisisMMD-trained heads found — zero-shot CLIP prompts; weaker, see docs){% endif %}. Categories are the five CrisisMMD humanitarian classes. Scores are model outputs, not calibrated probabilities — a high score can still be wrong.</p>
+  <div class="grid3">
+  {% for name in ("text", "image", "combined") %}{% set v = a.views[name] %}
+    <div class="card view">
+      <h3>{{ {"text": "Text only", "image": "Image only", "combined": "Combined text + image"}[name] }}</h3>
+      {% if v.available %}
+        <p class="big">{{ DISPLAY[v.label] }}</p>
+        <p class="small">model score {{ v.confidence|pct }}{% if v.confidence < 0.5 %} <span class="flag">low</span>{% endif %}</p>
+        <ul class="bars" aria-label="Class probabilities, {{ name }} view">
+        {% for lab in LABELS %}<li><span class="bar-label">{{ DISPLAY[lab] }}</span><span class="bar" aria-hidden="true"><span class="bar-fill" data-w="{{ (100 * v.proba[loop.index0])|round(1) }}"></span></span><span class="bar-val">{{ v.proba[loop.index0]|pct }}</span></li>{% endfor %}
+        </ul>
+      {% else %}<p class="muted">Unavailable: {{ v.reason }}</p>{% endif %}
+    </div>
+  {% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="cmp-h">
+  <h2 id="cmp-h">4 · Source comparison</h2>
+  <p class="help">The system lays out where the report and the image agree, add to each other or conflict. It does not decide which source is telling the truth.</p>
+  <div class="grid2">
+  {% for key, title, cls in (("agreements","Agreement","good"),("complementary","Complementary (one source only)","info"),("contradictions","Contradictions","bad"),("missing","Missing information","warn"),("uncertainty","Uncertainty","warn")) %}
+    <div class="card cmp {{ cls }}">
+      <h3>{{ title }} <span class="count">{{ a.comparison[key]|length }}</span></h3>
+      {% if a.comparison[key] %}<ul>{% for it in a.comparison[key] %}<li>{{ it.text }}{% if it.sources %}<div class="chips">{% for s in it.sources %}{{ src_chip(s) }} {% endfor %}</div>{% endif %}</li>{% endfor %}</ul>
+      {% else %}<p class="muted small">None.</p>{% endif %}
+    </div>
+  {% endfor %}
+  {% if a.image %}
+    <div class="card cmp">
+      <h3>All image observations</h3>
+      <p class="help">Scores are CLIP similarities against ordinary scenes, not verified facts. “not detected” does not mean absent.</p>
+      <ul class="obs">{% for o in a.image.observations %}<li class="band-{{ o.band }}"><span>{{ o.label }}</span><span class="mono">{{ o.score|pct }}</span><span class="small">{{ o.band.replace("_", " ") }}</span></li>{% endfor %}</ul>
+      <p class="small muted">Quality: brightness {{ a.image.quality.brightness }}, contrast {{ a.image.quality.contrast }}, sharpness {{ a.image.quality.sharpness }}{% for f in a.image.quality.flags %} <span class="flag">{{ f }}</span>{% endfor %}</p>
+    </div>
+  {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if draft %}
+<section aria-labelledby="draft-h" id="draft">
+  <h2 id="draft-h">5 · Incident draft</h2>
+  <div class="card">
+    <dl class="kv">
+      <dt>Status</dt><dd><span class="status status-{{ inc.status }}">{{ inc.status }}</span></dd>
+      <dt>Proposed category</dt><dd>{% if draft.category.proposed %}{{ DISPLAY[draft.category.proposed] }} <span class="small muted">({{ draft.category.basis }} view, {{ draft.category.confidence|pct }})</span>{% else %}—{% endif %}
+        {% if draft.category.final %}<br><strong>Reviewer's category: {{ DISPLAY[draft.category.final] }}</strong> <span class="small">({{ draft.category.decided_by }})</span>{% endif %}
+        {% if draft.category.needs_decision and not draft.category.final %}<span class="flag">reviewer decision needed</span>{% endif %}</dd>
+      <dt>Summary</dt><dd>{{ draft.summary }}{% if draft.summary_edited %} <span class="chip chip-r">✎ edited by {{ draft.summary_edited_by }}</span>{% endif %}</dd>
+      {% if draft.reviewer_notes %}<dt>Reviewer notes</dt><dd>{{ draft.reviewer_notes }}</dd>{% endif %}
+    </dl>
+    <h3>Claims and their sources</h3>
+    {% if draft.summary_edited %}<p class="help">The summary above was edited by a reviewer. The machine claims below keep their original source links.</p>{% endif %}
+    <ol class="claims">
+    {% for c in draft.claims %}<li class="claim claim-{{ c.kind }}"><span>{{ c.text }}</span><div class="chips">{% for s in c.sources %}{{ src_chip(s) }} {% else %}<span class="chip">no direct source</span>{% endfor %}</div></li>{% endfor %}
+    </ol>
+    <h3>Unresolved questions</h3>
+    {% if draft.unresolved_questions %}
+    <ol class="questions">
+    {% for q in draft.unresolved_questions %}<li><span>{{ q.text }}</span>
+      {% if q.resolution %}<p class="answer">Answer ({{ q.resolution.by }}): {{ q.resolution.text }}</p>{% else %}<span class="flag">open</span>{% endif %}</li>{% endfor %}
+    </ol>
+    {% else %}<p class="muted">None.</p>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if inc.status == "DRAFT" and (user.id == inc.created_by or user.can_review) %}
+<section class="card" aria-labelledby="submit-h">
+  <h2 id="submit-h">Ready for review?</h2>
+  <p>Check the transcript above, then send the draft to a reviewer. Nothing becomes a record without a reviewer's explicit approval.</p>
+  <form method="post" action="/incidents/{{ inc.id }}/submit"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="version" value="{{ inc.version }}">
+    <button class="btn" type="submit">Submit for review</button></form>
+</section>
+{% endif %}
+
+{% if user.can_review and inc.status == "NEEDS_REVIEW" %}
+<section aria-labelledby="review-h" id="review">
+  <h2 id="review-h">6 · Human review</h2>
+  <div class="grid2">
+    <form method="post" action="/incidents/{{ inc.id }}/draft" class="card stack">
+      <h3>Edit the draft</h3>
+      <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="version" value="{{ inc.version }}">
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        {% for lab in LABELS %}<option value="{{ lab }}" {% if lab == (draft.category.final or draft.category.proposed) %}selected{% endif %}>{{ DISPLAY[lab] }}</option>{% endfor %}
+      </select>
+      <label for="summary">Summary</label>
+      <textarea id="summary" name="summary" rows="5" maxlength="4000">{{ draft.summary }}</textarea>
+      {% for q in draft.unresolved_questions %}
+      <label for="answer_{{ q.id }}">Answer {{ q.id }}: {{ q.text }}</label>
+      <input id="answer_{{ q.id }}" name="answer_{{ q.id }}" maxlength="4000" value="{{ q.resolution.text if q.resolution else '' }}">
+      {% endfor %}
+      <label for="notes">Reviewer notes</label>
+      <textarea id="notes" name="notes" rows="2" maxlength="4000">{{ draft.reviewer_notes }}</textarea>
+      <button class="btn btn-ghost" type="submit">Save draft changes</button>
+    </form>
+    <div class="stack">
+      <form method="post" action="/incidents/{{ inc.id }}/approve" class="card stack good">
+        <h3>Approve</h3>
+        {% if four_eyes_block %}<p class="error">You created this incident. Another reviewer must approve it (four-eyes rule).</p>{% endif %}
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="version" value="{{ inc.version }}">
+        <label class="check"><input type="checkbox" name="confirm" value="yes" required> I reviewed the audio, image, transcript and every claim's sources.</label>
+        {% set open_q = draft.unresolved_questions|selectattr("resolution", "none")|list %}
+        {% if open_q %}<label class="check"><input type="checkbox" name="acknowledge_open" value="yes"> Approve with {{ open_q|length }} open question(s) — I accept they remain unresolved.</label>{% endif %}
+        <button class="btn btn-good" type="submit" {% if four_eyes_block %}disabled{% endif %}>Approve as record</button>
+      </form>
+      <form method="post" action="/incidents/{{ inc.id }}/reject" class="card stack bad">
+        <h3>Reject</h3>
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="version" value="{{ inc.version }}">
+        <label for="reason">Reason (required)</label>
+        <textarea id="reason" name="reason" rows="2" minlength="5" maxlength="4000" required></textarea>
+        <button class="btn btn-bad" type="submit">Reject</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% elif inc.status == "NEEDS_REVIEW" %}
+<section class="card"><p>Waiting for a reviewer. You can still correct the transcript above.</p></section>
+{% endif %}
+
+<section aria-labelledby="audit-h">
+  <h2 id="audit-h">Audit trail</h2>
+  <div class="table-wrap">
+  <table class="list small">
+    <thead><tr><th scope="col">#</th><th scope="col">Time (UTC)</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Details</th><th scope="col">Request</th></tr></thead>
+    <tbody>{% for e in events %}<tr><td>{{ e.seq }}</td><td class="mono">{{ e.ts[:19].replace("T", " ") }}</td><td>{{ e.actor }}</td><td>{{ e.action }}</td>
+      <td class="details">{% for k, v in e.details.items() %}{% if v is not none %}<span class="kvp"><b>{{ k }}</b> {{ v }}</span> {% endif %}{% endfor %}</td><td class="mono">{{ e.request_id or "" }}</td></tr>{% endfor %}</tbody>
+  </table>
+  </div>
+  <details><summary>Draft revisions ({{ revisions|length }})</summary>
+    <ul>{% for r in revisions %}<li class="small">v{{ r.version }} · {{ r.author }} · {{ r.reason }} · {{ r.changes }}</li>{% endfor %}</ul>
+  </details>
+</section>
+{% endblock %}

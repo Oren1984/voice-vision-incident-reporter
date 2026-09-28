@@ -1,0 +1,31 @@
+{
+  "description": "Short incident reports written for this project (fictional places and events) with reference transcripts. Used for protocol SP2: synthesised with Kokoro-82M, transcribed with faster-whisper, compared with these references. Not real reports; not CrisisMMD content.",
+  "author": "voice-vision-incident-reporter project",
+  "license": "CC BY 4.0 (project-authored text)",
+  "reports": [
+    {"id": "r01", "text": "There is a fire in the warehouse on Harbor Road. Thick black smoke is spreading toward the houses. I think two workers are still inside."},
+    {"id": "r02", "text": "The river flooded Mill Street about twenty minutes ago. The water is rising fast and three cars are stuck. Nobody is hurt so far."},
+    {"id": "r03", "text": "A building collapsed on King Street at seven fifteen this morning. People are trapped under the rubble. Firefighters just arrived."},
+    {"id": "r04", "text": "Power lines are down across Oak Avenue after the storm. The road is blocked by a fallen tree and the power is out on the whole block."},
+    {"id": "r05", "text": "Two cars crashed at the junction of Pine Road and Lake Street. One driver is bleeding from the head. An ambulance is on the way."},
+    {"id": "r06", "text": "About forty families have been evacuated from the flooded area near the school. They need blankets, food and bottled water at the shelter."},
+    {"id": "r07", "text": "The wildfire is moving down the hill toward Cedar Lane. We can see flames from the park. Please send more crews."},
+    {"id": "r08", "text": "Volunteers are handing out donations at the community center on Main Street. They have enough food but need more blankets."},
+    {"id": "r09", "text": "The roof of the sports hall caved in after the heavy snow. The hall was empty, so no one is injured, but the entrance is blocked."},
+    {"id": "r10", "text": "Water is coming up through the drains on Bridge Street. The ground floor of the pharmacy is underwater and the owner is stranded upstairs."},
+    {"id": "r11", "text": "A gas leak was reported outside the bakery on Station Road at nine pm. Police have closed the street and residents are leaving."},
+    {"id": "r12", "text": "After the earthquake the wall of the old hotel came down onto the parking lot. Several vehicles are damaged. I do not see any injured people."},
+    {"id": "r13", "text": "Smoke is coming out of the second floor window of the apartment block on Elm Street. The fire department is already here."},
+    {"id": "r14", "text": "The bus overturned on the highway near exit twelve. There are around fifteen passengers. Some are hurt and paramedics are treating them."},
+    {"id": "r15", "text": "The storm tore the roof off a house on Birch Drive. The family is safe with neighbors but the house is destroyed."},
+    {"id": "r16", "text": "The flood water has reached the hospital parking garage on Market Street. Staff are moving patients to the upper floors."},
+    {"id": "r17", "text": "A landslide covered the road to the village this afternoon. Debris is blocking both lanes and about a hundred people are cut off."},
+    {"id": "r18", "text": "Rescue teams pulled a man out of the collapsed garage on Maple Street. He is conscious and is being taken to the hospital."},
+    {"id": "r19", "text": "There are downed trees and debris all along Riverside Park. No one is hurt but the paths are dangerous."},
+    {"id": "r20", "text": "A transformer exploded behind the shopping mall and started a small fire. Firefighters put it out within ten minutes."},
+    {"id": "r21", "text": "Hundreds of people are waiting at the stadium shelter. They have been displaced by the flooding and need drinking water."},
+    {"id": "r22", "text": "The bridge on Canal Street is cracked after the tremor. Police stopped all traffic at eight thirty."},
+    {"id": "r23", "text": "A tree fell on a parked car on Walnut Street. The car is crushed. Nobody was inside."},
+    {"id": "r24", "text": "Just a quick update, the weather service issued a storm warning for tonight. Nothing has happened yet in our area."}
+  ]
+}

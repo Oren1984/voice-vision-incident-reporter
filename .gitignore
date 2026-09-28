@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+# Downloaded third-party data, model weights and derived features.
+# CrisisMMD terms require its contents to stay confidential: never commit tweets, images,
+# per-example features, per-example predictions or models trained on it.
+.cache/
+artifacts/
+# Runtime data of the local app (uploaded media, SQLite DB, logs)
+var/

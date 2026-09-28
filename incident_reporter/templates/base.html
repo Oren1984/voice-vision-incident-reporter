@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Incident Reporter{% endblock %} · Voice + Vision Incident Reporter</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">◉</span> Voice + Vision <span class="brand-sub">Incident Reporter</span></a>
+      {% if user %}
+      <nav aria-label="Main">
+        <a href="/">Incidents</a>
+        <a href="/incidents/new">New report</a>
+        {% if user.can_review %}<a href="/ops">Operations</a>{% endif %}
+      </nav>
+      <div class="who">
+        <span class="role role-{{ user.role }}">{{ user.role }}</span> <span class="uname">{{ user.username }}</span>
+        <form method="post" action="/logout" class="inline">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button class="btn btn-ghost btn-sm" type="submit">Sign out</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+  <div class="poc-banner" role="note">Local proof of concept · models can be wrong · every incident needs human approval before it becomes a record</div>
+  <main id="main" class="wrap">
+    {% if flash %}<div class="flash" role="status">{{ flash }}</div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="wrap foot">v{{ version }} · local, CPU-only · <a href="/healthz">health</a></footer>
+</body>
+</html>

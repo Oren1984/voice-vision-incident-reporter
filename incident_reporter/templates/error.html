@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Not allowed{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Request not completed</h1>
+  <p class="error" role="alert">{{ message }}</p>
+  <p><a class="btn btn-ghost" href="/">Back to incidents</a></p>
+</section>
+{% endblock %}

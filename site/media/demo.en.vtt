@@ -1,0 +1,161 @@
+WEBVTT
+
+1
+00:00:00.197 --> 00:00:04.733
+This is Voice plus Vision Incident Reporter, a local proof of concept.
+
+2
+00:00:04.733 --> 00:00:09.464
+A spoken report and a photo go in; a structured incident draft comes out,
+
+3
+00:00:09.464 --> 00:00:13.093
+and nothing becomes a record until a person approves it.
+
+4
+00:00:14.103 --> 00:00:18.551
+A field reporter signs in. Every account and every action is logged.
+
+5
+00:00:19.150 --> 00:00:23.519
+The reporter uploads a short voice report and a photo of the scene.
+
+6
+00:00:23.519 --> 00:00:28.540
+The server checks the file type, size, duration and whether the files decode,
+
+7
+00:00:28.540 --> 00:00:31.149
+and strips location data from the image.
+
+8
+00:00:31.744 --> 00:00:36.495
+Everything runs on this laptop's CPU: Whisper transcribes the audio,
+
+9
+00:00:36.495 --> 00:00:38.452
+and CLIP analyses the image.
+
+10
+00:00:38.759 --> 00:00:40.926
+Here is the report being played back.
+
+11
+00:00:40.876 --> 00:00:44.864
+[Report, synthetic voice] The river flooded our street about twenty minutes ago and the water
+
+12
+00:00:44.864 --> 00:00:45.817
+is still rising.
+
+13
+00:00:45.817 --> 00:00:47.067
+Three cars are stuck,
+
+14
+00:00:47.067 --> 00:00:50.817
+and an older couple is stranded in the house at 14 Mill Street.
+
+15
+00:00:49.509 --> 00:00:52.802
+The transcript is shown with the incident terms it found.
+
+16
+00:00:52.802 --> 00:00:56.732
+If the recogniser misheard something, the reporter corrects it here,
+
+17
+00:00:56.732 --> 00:00:59.332
+and the original is kept for the audit trail.
+
+18
+00:00:59.947 --> 00:01:04.139
+The report is classified three ways: text only, image only,
+
+19
+00:01:04.139 --> 00:01:06.129
+and text and image combined.
+
+20
+00:01:06.728 --> 00:01:11.828
+Then the two sources are compared. They agree on flood water. The street address,
+
+21
+00:01:11.828 --> 00:01:16.866
+the time and the stranded couple come only from the report. A weak image signal,
+
+22
+00:01:16.866 --> 00:01:21.147
+possible power lines, is marked as uncertain and becomes a question.
+
+23
+00:01:21.775 --> 00:01:24.582
+The draft proposes a category and a summary.
+
+24
+00:01:24.582 --> 00:01:28.857
+Every claim links back to the words or image evidence it came from.
+
+25
+00:01:29.478 --> 00:01:31.886
+When the sources contradict each other,
+
+26
+00:01:31.886 --> 00:01:34.851
+like a report of a fire with a photo of a flood,
+
+27
+00:01:34.851 --> 00:01:38.927
+the system lists both sides and does not decide which one is true.
+
+28
+00:01:39.541 --> 00:01:43.473
+A reviewer, who is not the reporter, answers the open question,
+
+29
+00:01:43.473 --> 00:01:45.720
+confirms the evidence, and approves.
+
+30
+00:01:47.353 --> 00:01:51.630
+Only now is there an approved record, with a hash, the reviewer's name,
+
+31
+00:01:51.630 --> 00:01:53.678
+and every change in the audit log.
+
+32
+00:01:54.353 --> 00:01:58.196
+Measured on 955 held-out CrisisMMD posts,
+
+33
+00:01:58.196 --> 00:02:02.508
+combining text and image scored 0.82 macro F1,
+
+34
+00:02:02.508 --> 00:02:08.132
+versus 0.79 for the image alone and 0.74 for the text alone.
+
+35
+00:02:08.132 --> 00:02:13.850
+The gain over the image alone was not statistically reliable.
+
+36
+00:02:15.103 --> 00:02:20.004
+One honest limit: there is no real dataset of spoken incident reports,
+
+37
+00:02:20.004 --> 00:02:24.625
+so speech was tested on synthetic voices and audiobook recordings,
+
+38
+00:02:24.625 --> 00:02:26.025
+not on real callers.
+
+39
+00:02:27.119 --> 00:02:29.967
+Voice plus Vision Incident Reporter. Code,
+
+40
+00:02:29.967 --> 00:02:32.816
+results and credits are in the repository.

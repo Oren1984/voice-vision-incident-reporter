@@ -1,0 +1,87 @@
+{
+  "files": {
+    "task_humanitarian_text_img_agreed_lab_train.tsv": "c45357a5d3de16a20255b12922f713bc7c6db10ec162783beaae0f015cb1f4d9",
+    "task_humanitarian_text_img_agreed_lab_dev.tsv": "825ac004c5caa8dd1eebd5643f2a3bf4c73b7b4e14887fe3700cf2874f9c9c00",
+    "task_humanitarian_text_img_agreed_lab_test.tsv": "bf2ea367ed48e91e68525daa1ace8fd49535d170bcad116e0214e468b958f6a3"
+  },
+  "splits": {
+    "train": {
+      "rows": 6126,
+      "distinct_tweets": 5263,
+      "class_counts": {
+        "affected_individuals": 71,
+        "infrastructure_and_utility_damage": 612,
+        "not_humanitarian": 3252,
+        "other_relevant_information": 1279,
+        "rescue_volunteering_or_donation_effort": 912
+      },
+      "event_counts": {
+        "hurricane_maria": 1724,
+        "hurricane_harvey": 1483,
+        "hurricane_irma": 1392,
+        "srilanka_floods": 562,
+        "mexico_earthquake": 428,
+        "california_wildfires": 362,
+        "iraq_iran_earthquake": 175
+      }
+    },
+    "dev": {
+      "rows": 998,
+      "distinct_tweets": 998,
+      "class_counts": {
+        "affected_individuals": 9,
+        "infrastructure_and_utility_damage": 80,
+        "not_humanitarian": 521,
+        "other_relevant_information": 239,
+        "rescue_volunteering_or_donation_effort": 149
+      },
+      "event_counts": {
+        "hurricane_maria": 272,
+        "hurricane_irma": 241,
+        "hurricane_harvey": 223,
+        "srilanka_floods": 84,
+        "mexico_earthquake": 78,
+        "california_wildfires": 71,
+        "iraq_iran_earthquake": 29
+      }
+    },
+    "test": {
+      "rows": 955,
+      "distinct_tweets": 955,
+      "class_counts": {
+        "affected_individuals": 9,
+        "infrastructure_and_utility_damage": 81,
+        "not_humanitarian": 504,
+        "other_relevant_information": 235,
+        "rescue_volunteering_or_donation_effort": 126
+      },
+      "event_counts": {
+        "hurricane_harvey": 248,
+        "hurricane_maria": 232,
+        "hurricane_irma": 215,
+        "srilanka_floods": 80,
+        "mexico_earthquake": 79,
+        "california_wildfires": 78,
+        "iraq_iran_earthquake": 23
+      }
+    }
+  },
+  "missing_images": 0,
+  "unreadable_images": 0,
+  "leakage_vs_train": {
+    "dev": {
+      "tweet_id_overlap": 0,
+      "image_path_overlap": 0,
+      "normalised_text_duplicates_of_train": 1,
+      "near_duplicate_images_of_train_ahash_le4": 226,
+      "excluded_in_sensitivity_subset": 226
+    },
+    "test": {
+      "tweet_id_overlap": 0,
+      "image_path_overlap": 0,
+      "normalised_text_duplicates_of_train": 1,
+      "near_duplicate_images_of_train_ahash_le4": 208,
+      "excluded_in_sensitivity_subset": 209
+    }
+  }
+}

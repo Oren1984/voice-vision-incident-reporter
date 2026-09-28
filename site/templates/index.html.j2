@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Voice + Vision Incident Reporter — a local proof of concept that turns a spoken report and a photo into a traceable incident draft, with explicit human approval. Includes a pre-registered text vs image vs combined comparison on CrisisMMD." />
+  <meta property="og:title" content="Voice + Vision Incident Reporter — Oren Salami" />
+  <meta property="og:description" content="Spoken report + photo → transcript, image analysis, three inference views, source comparison, traceable draft, human approval." />
+  <meta property="og:type" content="website" />
+  <title>Voice + Vision Incident Reporter — Oren Salami</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/layout.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/project.css" />
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <nav id="navbar" aria-label="Main">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#hero">
+        <span class="brand-name">Oren Salami</span>
+        <span class="brand-sep">/</span>
+        <span class="brand-role">Voice + Vision Incident Reporter</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#experiment">Experiment</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#approval">Approval</a></li>
+        <li><a href="#limits">Limits</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main">
+  <section id="hero" class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge reveal"><span class="badge-dot"></span>Proof of concept · local · CPU only · human-approved</div>
+        <h1 class="hero-title reveal reveal-delay-1">Voice + Vision<br><span class="gradient-text">Incident Reporter</span></h1>
+        <p class="hero-subtitle reveal reveal-delay-2">
+          A spoken report and a photo go in. A transcript, an image analysis, three inference views, a side-by-side
+          comparison of the two sources and a traceable incident draft come out — and nothing becomes a record until
+          a person reviews it and explicitly approves it.
+        </p>
+        <div class="hero-stats reveal reveal-delay-3" role="list" aria-label="Key numbers">
+          <div class="stat-item" role="listitem"><span class="stat-number">{{ rq.test_n }}</span><span class="stat-label">held-out test pairs</span></div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item" role="listitem"><span class="stat-number">{{ "%.3f"|format(res.combined.macro_f1) }}</span><span class="stat-label">combined Macro F1</span></div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item" role="listitem"><span class="stat-number">{{ "%+.3f"|format(rq.h1.point) }}</span><span class="stat-label">vs image — CI includes 0</span></div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item" role="listitem"><span class="stat-number">{{ tests_passed }}</span><span class="stat-label">tests passing</span></div>
+        </div>
+        <div class="hero-cta reveal reveal-delay-3">
+          <a href="#demo" class="btn-primary">Watch the demo
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#results" class="btn-outline">See the measured results</a>
+        </div>
+        <p class="honesty reveal">
+          <strong>Two things, kept apart:</strong> the research comparison uses genuine text–image posts (CrisisMMD) and
+          follows the papers below; speech transcription, conflict handling, drafting and approval are <em>our own
+          extensions</em>, evaluated separately. The papers establish nothing about voice reports.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">The problem</span>
+        <h2 class="section-title">Two sources, each fallible</h2>
+        <p class="section-desc">Incident reports increasingly arrive as a voice note plus a phone photo. Fusing them into one confident answer hides exactly what a duty officer needs to see.</p>
+      </div>
+      <div class="capabilities-grid">
+        <div class="cap-item reveal"><div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div>
+          <h3>Speech gets misheard</h3><p>In our noisy test clip the recogniser heard “14 Mill Street” as “14 years” — and stayed confident. The location silently disappeared.</p></div>
+        <div class="cap-item reveal reveal-delay-1"><div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <h3>Photos are partial</h3><p>An image can be old, reposted or from elsewhere. “Not detected” in a photo is not evidence of absence — so the system never treats it as a contradiction.</p></div>
+        <div class="cap-item reveal reveal-delay-2"><div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>People must decide</h3><p>When the report says “fire” and the photo shows a flood, the system lists both sides and asks. Only a reviewer — not the reporter — can approve a record.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Workflow</span>
+        <h2 class="section-title">From voice note to approved record</h2>
+        <p class="section-desc">Screenshots of the running application (local, illustrative inputs: fictional report in a synthetic voice, public-domain FEMA photo of an unrelated event).</p>
+      </div>
+      <ol class="flow">
+        {% for step in steps %}
+        <li class="flow-step reveal">
+          <div class="flow-text">
+            <span class="mindset-number">{{ "%02d"|format(loop.index) }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </div>
+          <figure class="shot"><a href="media/{{ step.img }}"><img src="media/{{ step.img }}" alt="{{ step.alt }}" loading="lazy" width="{{ step.w }}" height="{{ step.h }}"></a></figure>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section id="experiment" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Research question</span>
+        <h2 class="section-title">Three paths, identical test examples</h2>
+        <p class="section-desc">Does combining text and image classify incidents better than either alone? One learner, three inputs, the same {{ rq.test_n }} held-out CrisisMMD posts, a protocol frozen before any run.</p>
+      </div>
+      <div class="paths">
+        {% for key, name, desc in [("text", "Text only", "Frozen CLIP text embedding of the post (or, in the app, the transcript) → logistic regression."), ("image", "Image only", "Frozen CLIP ViT-B/32 image embedding → logistic regression."), ("combined", "Combined", "Both embeddings concatenated (early fusion) → logistic regression. The primary model.")] %}
+        <div class="project-card path reveal {{ 'path-primary' if key == 'combined' }}">
+          <div class="card-header"><span class="project-category {{ 'category-ml' if key == 'text' else 'category-agent' if key == 'image' else 'category-validation' }}">{{ name }}</span></div>
+          <p class="card-purpose">{{ desc }}</p>
+          <div class="card-highlights">
+            <div class="card-highlight"><span class="ch-num">{{ "%.3f"|format(res[key].macro_f1) }}</span><span class="ch-label">Macro F1</span></div>
+            <div class="card-highlight"><span class="ch-num">{{ "%.3f"|format(res[key].accuracy) }}</span><span class="ch-label">Accuracy</span></div>
+            <div class="card-highlight"><span class="ch-num">{{ "%.3f"|format(res[key].weighted_f1) }}</span><span class="ch-label">Weighted F1</span></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="protocol reveal">
+        <div class="stack-group">
+          <div class="stack-group-label">Pre-registered protocol</div>
+          <ul class="plain">
+            <li><b>Data:</b> CrisisMMD v2.0, official agreed-label humanitarian split — {{ dc.splits.train.rows }} train / {{ dc.splits.dev.rows }} dev / {{ dc.splits.test.rows }} test pairs, 5 classes (text and image labels agree).</li>
+            <li><b>Primary metric:</b> Macro F1. <b>Success:</b> combined beats the best single source with a 95% paired-bootstrap CI above 0.</li>
+            <li><b>No leakage:</b> hyperparameters chosen on dev only; the test set is scored once; the {{ rq.sensitivity_no_near_duplicates.excluded }} test pairs whose image or text near-duplicates training data are also analysed separately.</li>
+            <li><b>Secondary:</b> late fusion, zero-shot CLIP (the app's fallback), and a paper-inspired guided-gating + differential-attention head (ours).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Measured results</span>
+        <h2 class="section-title">Fusion helps — but not reliably over the image alone</h2>
+        <p class="section-desc">Reported as measured, including the negative part.</p>
+      </div>
+      <div class="result-grid">
+        <div class="stack-group reveal">
+          <div class="stack-group-label">Macro F1 on {{ rq.test_n }} test pairs</div>
+          <div class="bars" role="img" aria-label="Macro F1: text {{ '%.3f'|format(res.text.macro_f1) }}, image {{ '%.3f'|format(res.image.macro_f1) }}, combined {{ '%.3f'|format(res.combined.macro_f1) }}, zero-shot combined {{ '%.3f'|format(res.zero_shot_combined.macro_f1) }}">
+            {% for key, name in [("text", "Text only"), ("image", "Image only"), ("combined", "Combined"), ("late_fusion", "Late fusion (S1)"), ("zero_shot_combined", "Zero-shot combined (S2)")] %}
+            <div class="bar-row"><span class="bar-name">{{ name }}</span><span class="bar-track"><span class="bar-fill {{ 'bar-primary' if key == 'combined' }}" style="width: {{ (100 * res[key].macro_f1)|round(1) }}%"></span></span><span class="bar-num">{{ "%.3f"|format(res[key].macro_f1) }}</span></div>
+            {% endfor %}
+            <div class="bar-row"><span class="bar-name">Diff-attention head (S3)</span><span class="bar-track"><span class="bar-fill" style="width: {{ (100 * s3.test_macro_f1_mean)|round(1) }}%"></span></span><span class="bar-num">{{ "%.3f"|format(s3.test_macro_f1_mean) }}</span></div>
+          </div>
+        </div>
+        <div class="stack-group reveal reveal-delay-1">
+          <div class="stack-group-label">Paired differences (95% CI)</div>
+          <div class="forest" role="img" aria-label="Confidence intervals of Macro F1 differences">
+            {% for key, name in [("combined_minus_best_unimodal", "Combined − best single"), ("combined_minus_text", "Combined − text"), ("late_fusion_minus_best_unimodal", "Late fusion − best single")] %}
+            {% set b = rq.bootstrap[key] %}
+            <div class="forest-row">
+              <span class="forest-name">{{ name }}</span>
+              <span class="forest-track"><span class="forest-zero"></span>
+                <span class="forest-ci {{ 'ci-ok' if b.ci95[0] > 0 else 'ci-no' }}" style="left: {{ (50 + 250 * b.ci95[0])|round(1) }}%; width: {{ (250 * (b.ci95[1] - b.ci95[0]))|round(1) }}%"></span>
+                <span class="forest-pt" style="left: {{ (50 + 250 * b.point)|round(1) }}%"></span></span>
+              <span class="forest-num">{{ "%+.3f"|format(b.point) }} [{{ "%+.3f"|format(b.ci95[0]) }}, {{ "%+.3f"|format(b.ci95[1]) }}]</span>
+            </div>
+            {% endfor %}
+            <p class="note">Axis −0.2 … +0.2; the middle line is 0. Green: interval excludes 0.</p>
+          </div>
+        </div>
+      </div>
+      <div class="capabilities-grid findings">
+        <div class="cap-item reveal"><h3>Verdict</h3><p>The pre-registered success criterion is <b>not met</b>: combined − image = {{ "%+.3f"|format(rq.h1.point) }}, CI [{{ "%+.3f"|format(rq.h1.ci95[0]) }}, {{ "%+.3f"|format(rq.h1.ci95[1]) }}]. McNemar {{ rq.mcnemar_combined_vs_best_unimodal.a_right_b_wrong }} vs {{ rq.mcnemar_combined_vs_best_unimodal.a_wrong_b_right }}. Combining does beat text alone.</p></div>
+        <div class="cap-item reveal reveal-delay-1"><h3>Why disagreement matters</h3><p>When the text and image views disagree ({{ rq.view_agreement.views_disagree }} of {{ rq.test_n }}), the combined view is right {{ "%.0f"|format(100 * rq.view_agreement.accuracy_when_views_disagree) }}% of the time, vs {{ "%.0f"|format(100 * rq.view_agreement.accuracy_when_views_agree) }}% when they agree. The app therefore shows disagreement instead of averaging it away.</p></div>
+        <div class="cap-item reveal reveal-delay-2"><h3>Fragile margin</h3><p>Post hoc: without the 9-example “affected individuals” class the gap over image shrinks to {{ "%+.3f"|format(ex.a_macro_f1_4_classes_without_affected_individuals.combined_minus_best_unimodal) }}. The paper-inspired attention head ({{ "%.3f"|format(s3.test_macro_f1_mean) }} ± {{ "%.3f"|format(s3.test_macro_f1_sd) }}) does not change the answer.</p></div>
+      </div>
+
+      <h3 class="sub reveal">Speech workflow — our extension, measured separately</h3>
+      <div class="capabilities-grid">
+        <div class="cap-item reveal"><h4>Real read speech</h4><p class="big-num">{{ "%.1f"|format(100 * sp1.wer) }}% WER</p><p>LibriSpeech test-clean, {{ sp1.sample.n }} utterances, {{ sp1.sample.speakers }} speakers, Whisper base.en on CPU. Audiobooks, not incident calls.</p></div>
+        <div class="cap-item reveal reveal-delay-1"><h4>Scripted reports, synthetic voices</h4><p class="big-num">{{ "%.1f"|format(100 * sp2.summary.clean.wer) }}% → {{ "%.1f"|format(100 * sp2.summary.snr0.wer) }}% WER</p><p>Clean vs heavy noise (0 dB SNR). Under noise, incident-critical words were recalled {{ "%.0f"|format(100 * sp2.summary.snr0.critical_term_recall) }}% of the time and {{ sp2.summary.snr0.clips_with_changed_missing_fields }} of {{ sp2.summary.snr0.clips }} drafts gained or lost a question.</p></div>
+        <div class="cap-item reveal reveal-delay-2"><h4>Voice channel cost</h4><p class="big-num">{{ "%+.3f"|format(-sp3.text_only_drop_original_to_asr_clean) }} Macro F1</p><p>Text-only view when the {{ sp3.n }} test posts are read by a synthetic voice and transcribed ({{ "%.1f"|format(100 * sp3.wer_clean) }}% WER), vs the original text; combined view {{ "%+.3f"|format(-sp3.combined_drop_original_to_asr_clean) }}.</p></div>
+      </div>
+      <p class="more reveal"><a class="btn-outline" href="../docs/experiment-results.md">Full tables, confusion matrices and examples</a></p>
+    </div>
+  </section>
+
+  <section id="approval" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Human approval</span>
+        <h2 class="section-title">The model proposes. A reviewer decides.</h2>
+      </div>
+      <div class="states reveal" role="list" aria-label="Incident states">
+        <div class="state s-draft" role="listitem"><b>DRAFT</b><span>analysed cleanly; reporter checks and corrects the transcript</span></div>
+        <div class="state-arrow" aria-hidden="true">→</div>
+        <div class="state s-review" role="listitem"><b>NEEDS_REVIEW</b><span>submitted — or sent here automatically on any failure, gap, conflict or low confidence</span></div>
+        <div class="state-arrow" aria-hidden="true">→</div>
+        <div class="state s-final" role="listitem"><b>APPROVED</b> / <b class="rej">REJECTED</b><span>explicit reviewer decision; approved records are immutable and hashed</span></div>
+      </div>
+      <div class="mindset-grid">
+        <div class="mindset-card reveal"><div class="mindset-number">RULES</div><h3>What approval requires</h3>
+          <ul class="plain"><li>reviewer role, and not the person who created the incident</li><li>an explicit “I reviewed the evidence” confirmation</li><li>every open question answered — or explicitly acknowledged</li><li>the exact version the reviewer saw (stale → refused)</li><li>rejections need a reason</li></ul></div>
+        <div class="mindset-card reveal reveal-delay-1"><div class="mindset-number">TRACE</div><h3>What is recorded</h3>
+          <ul class="plain"><li>original and corrected transcripts</li><li>each draft claim → transcript span, image score or model output</li><li>every edit as a revision with author and changed fields</li><li>a sha256-chained, append-only audit log — ids and hashes, no raw report text</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="safeguards" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Safeguards</span>
+        <h2 class="section-title">Fail safe, validate everything, keep it local</h2>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-group reveal"><div class="stack-group-label">Fail-safe states</div><div class="stack-items">{% for t in ["ASR crash", "invalid model output", "NaN probabilities", "missing audio/image", "no speech", "unsure recogniser", "blurry / dark image", "source conflict", "low confidence"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+        <div class="stack-group reveal reveal-delay-1"><div class="stack-group-label">Input &amp; media</div><div class="stack-items">{% for t in ["size & duration limits", "magic-byte sniffing", "full decode", "pixel-bomb limit", "EXIF / GPS stripped", "server-chosen paths", "authorised streaming"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+        <div class="stack-group reveal reveal-delay-2"><div class="stack-group-label">Access &amp; web</div><div class="stack-items">{% for t in ["local accounts, PBKDF2", "roles + four-eyes", "CSRF on every POST", "strict CSP", "login throttling", "localhost only"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+        <div class="stack-group reveal"><div class="stack-group-label">Observability</div><div class="stack-items">{% for t in ["JSON logs + request ids", "/healthz", "ops dashboard", "p50/p95 durations", "failure counters", "audit-chain check"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+        <div class="stack-group reveal reveal-delay-1"><div class="stack-group-label">Privacy &amp; data</div><div class="stack-items">{% for t in ["no cloud, no API keys", "no raw text in logs", "CrisisMMD kept confidential", "aggregate results only"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+        <div class="stack-group reveal reveal-delay-2"><div class="stack-group-label">Tested</div><div class="stack-items">{% for t in [tests_passed ~ " automated tests", "approval boundary", "fail-safe paths", "path traversal", "traceability", "experiment ordering"] %}<span class="stack-tag">{{ t }}</span>{% endfor %}</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="limits" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Limitations</span>
+        <h2 class="section-title">What this does not show</h2>
+      </div>
+      <div class="limits reveal">
+        <ul class="plain">
+          <li><b>No real voice reports.</b> No dataset pairs spoken incident reports with photos; speech was tested on synthetic voices (optimistic) and audiobook speech. Real callers, accents, stress and phone audio are untested.</li>
+          <li><b>Small, fragile fusion gain.</b> Over the image alone it is not statistically reliable and depends on class weighting and nine rare-class examples.</li>
+          <li><b>Confidently wrong models.</b> The recogniser and the classifiers can be wrong with high scores; scores are not calibrated probabilities. Image concept scores are weak signals (dev AUROC 0.64–0.90).</li>
+          <li><b>Simple rules.</b> Transcript evidence is rule-based and misses paraphrases; it is a transparency aid, not understanding.</li>
+          <li><b>Narrow categories.</b> Five humanitarian classes from 2017 disaster tweets; English only.</li>
+          <li><b>Not a reproduction.</b> The primary paper's numbers are not reproduced (different split, no LLaVA text enrichment).</li>
+          <li><b>POC security.</b> Local accounts, no SSO/MFA, no HTTPS, no retention or deletion workflow.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Demonstration</span>
+        <h2 class="section-title">The working application, end to end</h2>
+        <p class="section-desc">Screen recording of the local app with synthetic narration and English captions ({{ video.duration_s }} s).</p>
+      </div>
+      <figure class="video reveal">
+        <video controls preload="metadata" poster="media/demo-poster.png" width="1280" height="720">
+          <source src="media/demo.mp4" type="video/mp4" />
+          Your browser cannot play this video. <a href="media/demo.mp4">Download the MP4</a>.
+        </video>
+        <figcaption>
+          English captions are burned into the video; the same captions as a text file: <a href="media/demo.en.vtt">demo.en.vtt</a>.<br>
+          Illustrative inputs: a fictional report read by a synthetic voice (Kokoro-82M) and a public-domain FEMA photo of an unrelated 2008 flood — not real incident data.<br>
+          Music: “Dreamer” Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0 —
+          <a href="https://creativecommons.org/licenses/by/4.0/">creativecommons.org/licenses/by/4.0</a>. Excerpt, trimmed, volume lowered and ducked under the narration, fades added.
+          Narration: synthetic (Kokoro-82M, Apache-2.0). Photo: FEMA / Jocelyn Augustino, public domain.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="research" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Research</span>
+        <h2 class="section-title">Sources</h2>
+      </div>
+      <div class="projects-grid refs">
+        <a class="project-card reveal" href="https://arxiv.org/abs/2507.05165"><span class="project-category category-agent">Primary paper</span><span class="card-title">Differential Attention for Multimodal Crisis Event Analysis</span><span class="card-purpose">Munia, Zhu, Nasraoui, Imran · CVPR 2025 Workshops (MMFM3) · arXiv:2507.05165</span></a>
+        <div class="project-card reveal reveal-delay-1"><span class="project-category category-agent">Authors' code</span><a class="card-title" href="https://github.com/Munia03/Multimodal_Crisis_Event">Multimodal_Crisis_Event</a><span class="card-purpose">Inspected, not copied (no license stated). Our reading of it: <a class="inline-link" href="../docs/paper-mapping.md">paper mapping</a>.</span></div>
+        <a class="project-card reveal reveal-delay-2" href="https://aclanthology.org/2022.wnut-1.6/"><span class="project-category category-ml">Secondary paper</span><span class="card-title">Exploring Multimodal Features and Fusion Strategies for Analyzing Disaster Tweets</span><span class="card-purpose">Pranesh · W-NUT 2022, pp. 62–68</span></a>
+        <a class="project-card reveal reveal-delay-3" href="https://crisisnlp.qcri.org/crisismmd"><span class="project-category category-validation">Dataset</span><span class="card-title">CrisisMMD v2.0</span><span class="card-purpose">Alam, Ofli, Imran · ICWSM 2018; split: Ofli et al., ISCRAM 2020 · research use, contents confidential</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="project" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Project</span>
+        <h2 class="section-title">Code and documentation</h2>
+        <p class="section-desc">{% if repo_url %}Repository: <a href="{{ repo_url }}">{{ repo_url }}</a>{% else %}The public repository link will be added here once the repository is published.{% endif %}</p>
+      </div>
+      <div class="doc-links reveal">
+        {% for href, name in [("../README.md", "README"), ("../docs/architecture.md", "Architecture"), ("../docs/experiment-design.md", "Experiment design"), ("../docs/experiment-results.md", "Results"), ("../docs/failure-analysis.md", "Failure analysis"), ("../docs/paper-mapping.md", "Paper mapping"), ("../docs/contributions.md", "Contributions"), ("../docs/dataset.md", "Dataset & terms"), ("../docs/security-privacy-governance.md", "Security & governance"), ("../docs/setup.md", "Setup"), ("../docs/LOCAL_DEMO_ACCESS.md", "Run the demo"), ("../docs/demo-guide.md", "Demo guide"), ("../docs/testing.md", "Testing"), ("../docs/media-licenses.md", "Media licenses")] %}
+        <a class="btn-outline" href="{{ href }}">{{ name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-contact">
+    <div class="container">
+      <div class="contact-inner reveal">
+        <div class="contact-content">
+          <span class="section-label">Contact</span>
+          <h2 class="contact-title">Oren Salami</h2>
+          <p class="contact-desc">AI Systems Engineer — agents, platforms and applied ML.</p>
+          <div class="contact-links">
+            <a href="https://nfc4u.co.il/Salami/Ai-Systems-Portfolio/" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Main portfolio
+            </a>
+            <a href="https://github.com/Oren1984" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub profile
+            </a>
+            <a href="https://www.linkedin.com/in/oren-salami-b2988a224/" class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="contact-visual">
+          <div class="contact-card">
+            <div class="cc-header"><div class="cc-avatar" aria-hidden="true">OS</div><div><div class="cc-name">Oren Salami</div><div class="cc-role">AI Systems Engineer</div></div></div>
+            <div class="cc-tags"><span>Multimodal AI</span><span>Speech</span><span>Evaluation</span><span>Human-in-the-loop</span><span>Governance</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand"><span class="brand-name">Voice + Vision Incident Reporter</span><span class="footer-tagline">Proof of concept · results generated from the repository's results files</span></div>
+        <div class="footer-copy">Photos: FEMA, public domain · Music: “Dreamer” Kevin MacLeod, CC BY 4.0 · Voices: Kokoro-82M (synthetic)</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/interactions.js"></script>
+</body>
+</html>
