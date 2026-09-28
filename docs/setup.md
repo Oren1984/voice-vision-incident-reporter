@@ -47,13 +47,31 @@ Protocol: [experiment-design.md](experiment-design.md).
 | `docs/img/*.png` | `python tools/capture_demo.py screenshots` |
 | `site/media/demo.mp4` + captions, poster | `python tools/capture_demo.py video`, then `python tools/make_video.py` |
 | `docs/experiment-results.md` | `python tools/render_results.py` |
-| `site/index.html` | `python tools/build_site.py [--repo-url URL]`, then `python tools/check_site.py` |
+| `site/index.html` | `python tools/build_site.py`, then `python tools/check_site.py` |
 
 The capture tools drive the real app on port 8765 with throw-away accounts in `var/capture`. `make_video.py` accepts
 only the licensed music file, checked by its sha256 ([media-licenses.md](media-licenses.md)).
 
-The site links to `../docs/*.md` and `../README.md`. Those links work when the site is opened from inside the
-repository; if only `site/` is hosted, build it with `--repo-url` and point the links at the repository.
+Only `site/` is copied to the public web server, so the site is self-contained: its README and documentation buttons
+point at the files on GitHub (`--repo-url`, default: this repository), and `check_site.py` rejects any local reference
+outside `site/`.
+
+## View the static site locally
+
+Serve `site/` as the web root, exactly as the public server will. From the repository root:
+
+```powershell
+cd site
+python -m http.server 8080 --bind 127.0.0.1
+```
+
+macOS/Linux: the same commands (`python3` if `python` is not on the path). Open <http://127.0.0.1:8080/>. Press
+**Ctrl+C** in that terminal to stop the server, then `cd ..` to return to the repository root.
+
+Known quirk: on the Windows machine used for testing, Python's built-in development server sometimes cut large files
+short (3–4 of 10 downloads of `demo.mp4` were incomplete, with or without `--protocol HTTP/1.1`), so an image can
+appear cut off or the video can stop early; reload the page. The files themselves are complete, and another static
+server delivered all of them intact, so this does not affect the public web server.
 
 ## Environment notes (Windows machine used for the recorded run)
 
@@ -67,5 +85,5 @@ repository; if only `site/` is hosted, build it with `--repo-url` and point the 
 
 ## Open decisions before sharing
 
-- Publishing the repository and the site needs the owner's approval.
+- Copying `site/` to the public web server needs the owner's approval.
 - The CrisisMMD-trained heads stay unpublished unless the owner decides otherwise under the dataset terms.

@@ -87,6 +87,12 @@ ul.plain b { color: var(--text-primary); }
   .paths { grid-template-columns: 1fr; }
   .result-grid { grid-template-columns: 1fr; }
 }
+/* the long project name must not push the menu button off narrow screens */
+.nav-brand { min-width: 0; flex-shrink: 1; }
+.brand-name, .brand-sep { flex-shrink: 0; }
+.brand-role { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav-toggle { flex-shrink: 0; }
+
 @media (max-width: 768px) {
   .flow-step { grid-template-columns: 1fr; gap: var(--space-lg); }
   .flow-step:nth-child(even) .flow-text { order: 0; }

@@ -1,6 +1,8 @@
 """Check every link and asset referenced by site/index.html (local files exist; external URLs answer).
 
 Usage: python tools/check_site.py [--offline]
+
+Local references must resolve inside site/, because only site/ is copied to the public server.
 """
 
 from __future__ import annotations
@@ -78,7 +80,8 @@ def main() -> int:
             print("OK   " + ref)
         else:
             target = (SITE / u.path).resolve()  # not urljoin: it drops a leading "../"
-            ok = target.exists()
+            ok = target.exists() and target.is_relative_to(SITE)  # only site/ is published: nothing outside it
+
             print(("OK  " if ok else "BAD ") + ref)
             bad += [] if ok else [ref]
     print(f"\n{len(seen)} references, {len(bad)} broken")

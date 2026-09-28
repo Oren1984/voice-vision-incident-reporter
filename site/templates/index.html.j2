@@ -201,7 +201,7 @@
         <div class="cap-item reveal reveal-delay-1"><h4>Scripted reports, synthetic voices</h4><p class="big-num">{{ "%.1f"|format(100 * sp2.summary.clean.wer) }}% → {{ "%.1f"|format(100 * sp2.summary.snr0.wer) }}% WER</p><p>Clean vs heavy noise (0 dB SNR). Under noise, incident-critical words were recalled {{ "%.0f"|format(100 * sp2.summary.snr0.critical_term_recall) }}% of the time and {{ sp2.summary.snr0.clips_with_changed_missing_fields }} of {{ sp2.summary.snr0.clips }} drafts gained or lost a question.</p></div>
         <div class="cap-item reveal reveal-delay-2"><h4>Voice channel cost</h4><p class="big-num">{{ "%+.3f"|format(-sp3.text_only_drop_original_to_asr_clean) }} Macro F1</p><p>Text-only view when the {{ sp3.n }} test posts are read by a synthetic voice and transcribed ({{ "%.1f"|format(100 * sp3.wer_clean) }}% WER), vs the original text; combined view {{ "%+.3f"|format(-sp3.combined_drop_original_to_asr_clean) }}.</p></div>
       </div>
-      <p class="more reveal"><a class="btn-outline" href="../docs/experiment-results.md">Full tables, confusion matrices and examples</a></p>
+      <p class="more reveal"><a class="btn-outline" href="{{ doc('docs/experiment-results.md') }}">Full tables, confusion matrices and examples</a></p>
     </div>
   </section>
 
@@ -295,7 +295,7 @@
       </div>
       <div class="projects-grid refs">
         <a class="project-card reveal" href="https://arxiv.org/abs/2507.05165"><span class="project-category category-agent">Primary paper</span><span class="card-title">Differential Attention for Multimodal Crisis Event Analysis</span><span class="card-purpose">Munia, Zhu, Nasraoui, Imran · CVPR 2025 Workshops (MMFM3) · arXiv:2507.05165</span></a>
-        <div class="project-card reveal reveal-delay-1"><span class="project-category category-agent">Authors' code</span><a class="card-title" href="https://github.com/Munia03/Multimodal_Crisis_Event">Multimodal_Crisis_Event</a><span class="card-purpose">Inspected, not copied (no license stated). Our reading of it: <a class="inline-link" href="../docs/paper-mapping.md">paper mapping</a>.</span></div>
+        <div class="project-card reveal reveal-delay-1"><span class="project-category category-agent">Authors' code</span><a class="card-title" href="https://github.com/Munia03/Multimodal_Crisis_Event">Multimodal_Crisis_Event</a><span class="card-purpose">Inspected, not copied (no license stated). Our reading of it: <a class="inline-link" href="{{ doc('docs/paper-mapping.md') }}">paper mapping</a>.</span></div>
         <a class="project-card reveal reveal-delay-2" href="https://aclanthology.org/2022.wnut-1.6/"><span class="project-category category-ml">Secondary paper</span><span class="card-title">Exploring Multimodal Features and Fusion Strategies for Analyzing Disaster Tweets</span><span class="card-purpose">Pranesh · W-NUT 2022, pp. 62–68</span></a>
         <a class="project-card reveal reveal-delay-3" href="https://crisisnlp.qcri.org/crisismmd"><span class="project-category category-validation">Dataset</span><span class="card-title">CrisisMMD v2.0</span><span class="card-purpose">Alam, Ofli, Imran · ICWSM 2018; split: Ofli et al., ISCRAM 2020 · research use, contents confidential</span></a>
       </div>
@@ -307,11 +307,12 @@
       <div class="section-header reveal">
         <span class="section-label">Project</span>
         <h2 class="section-title">Code and documentation</h2>
-        <p class="section-desc">{% if repo_url %}Repository: <a href="{{ repo_url }}">{{ repo_url }}</a>{% else %}The public repository link will be added here once the repository is published.{% endif %}</p>
+        <p class="section-desc">Source code, documentation and results on GitHub: <a href="{{ repo_url }}">{{ repo_url }}</a></p>
       </div>
       <div class="doc-links reveal">
-        {% for href, name in [("../README.md", "README"), ("../docs/architecture.md", "Architecture"), ("../docs/experiment-design.md", "Experiment design"), ("../docs/experiment-results.md", "Results"), ("../docs/failure-analysis.md", "Failure analysis"), ("../docs/paper-mapping.md", "Paper mapping"), ("../docs/contributions.md", "Contributions"), ("../docs/dataset.md", "Dataset & terms"), ("../docs/security-privacy-governance.md", "Security & governance"), ("../docs/setup.md", "Setup"), ("../docs/LOCAL_DEMO_ACCESS.md", "Run the demo"), ("../docs/demo-guide.md", "Demo guide"), ("../docs/testing.md", "Testing"), ("../docs/media-licenses.md", "Media licenses")] %}
-        <a class="btn-outline" href="{{ href }}">{{ name }}</a>
+        <a class="btn-outline" href="{{ repo_url }}">Repository</a>
+        {% for path, name in [("README.md", "README"), ("docs/architecture.md", "Architecture"), ("docs/experiment-design.md", "Experiment design"), ("docs/experiment-results.md", "Results"), ("docs/failure-analysis.md", "Failure analysis"), ("docs/paper-mapping.md", "Paper mapping"), ("docs/contributions.md", "Contributions"), ("docs/dataset.md", "Dataset & terms"), ("docs/security-privacy-governance.md", "Security & governance"), ("docs/setup.md", "Setup"), ("docs/LOCAL_DEMO_ACCESS.md", "Run the demo"), ("docs/demo-guide.md", "Demo guide"), ("docs/testing.md", "Testing"), ("docs/media-licenses.md", "Media licenses")] %}
+        <a class="btn-outline" href="{{ doc(path) }}">{{ name }}</a>
         {% endfor %}
       </div>
     </div>

@@ -3,7 +3,8 @@
   python tools/record_tests.py     # writes results/test_summary.json (count shown on the site)
   python tools/build_site.py [--repo-url URL]
 
-Only a real repository URL may be passed; without one the site says the link will be added after publication.
+The site is published on its own (only site/ is copied to the web server), so every link to the README or docs/
+points at the file on GitHub under --repo-url; the page never links outside site/ with a relative path.
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
+REPO_URL = "https://github.com/Oren1984/voice-vision-incident-reporter"
 SITE = ROOT / "site"
 R = ROOT / "results"
 
@@ -60,8 +62,11 @@ def load(name):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--repo-url", default="")
+    ap.add_argument("--repo-url", default=REPO_URL)
     a = ap.parse_args()
+    if not a.repo_url.startswith("https://github.com/"):
+        raise SystemExit("--repo-url must be the repository's https://github.com/... URL")
+    repo_url = a.repo_url.rstrip("/")
     media = SITE / "media"
     media.mkdir(parents=True, exist_ok=True)
     steps = []
@@ -74,10 +79,11 @@ def main() -> None:
     video_meta = media / "demo.json"
     video = json.loads(video_meta.read_text()) if video_meta.exists() else {"duration_s": "—"}
     env = Environment(loader=FileSystemLoader(str(SITE / "templates")), autoescape=True, undefined=StrictUndefined)
+    env.globals["doc"] = lambda path: f"{repo_url}/blob/main/{path}"
     html = env.get_template("index.html.j2").render(
         rq=rq, res=rq["results"], dc=load("data_checks.json"), s3=load("s3_diffattn_results.json"), ex=load("exploratory.json"),
         sp1=load("speech_librispeech.json"), sp2=load("speech_scripted.json"), sp3=load("speech_sp3.json"),
-        tests_passed=load("test_summary.json")["passed"], steps=steps, video=video, repo_url=a.repo_url,
+        tests_passed=load("test_summary.json")["passed"], steps=steps, video=video, repo_url=repo_url,
     )
     (SITE / "index.html").write_text(html, encoding="utf-8")
     print(f"wrote site/index.html ({len(html):,} bytes), {len(steps)} screenshots")
